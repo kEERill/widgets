@@ -55,7 +55,7 @@ class Builder
          */
         if (!$widget instanceof Widget) {
             throw new WidgetException(sprintf(
-                    'Объект [%s] не является виджетом и не может быть создан'
+                    'Объект [%s] не является виджетом и не может быть создан', $widgetClass
                 ));
         }
 

@@ -94,7 +94,7 @@ class ListWidget extends Widget
     public function getAvailableColumnTypes()
     {
         if ($this->availableColumnTypes === null) {
-            return $this->availableColumnTypes = config('lists.columnTypes', []);
+            return $this->availableColumnTypes = config('widgets.columnTypes', []);
         }
 
         return $this->availableColumnTypes;
