@@ -1,0 +1,38 @@
+<?php
+
+namespace DummyNamespace;
+
+use Keerill\Widgets\Lists\ListWidget;
+
+class DummyClass extends ListWidget
+{
+    /** 
+     * @var string $template Название шаблона таблицы 
+     */
+    protected $template = 'widgets::lists.layouts.default';
+
+    /**
+     * @var string $defaultSort Стандартная сортировка
+     */
+    protected $defaultSort = 'created_at desc';
+    
+    /**
+     * @var integer $recordsToPage Количество записей на страницу
+     */
+    protected $recordsToPage = 15;
+
+    /**
+     * @var Model $modelClass Класс модели, которые будем выводить в таблице
+     */
+    protected $modelClass = null;
+
+    /**
+     * Наследуем параметры, которые будут передоваться в view
+     * @param array $options
+     * @return array
+     */
+    protected function extendRenderOptions(array $options)
+    {
+        return $options;
+    }
+}

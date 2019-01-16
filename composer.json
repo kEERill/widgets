@@ -1,0 +1,29 @@
+{
+    "name": "keerill/widgets",
+    "description": "The Laravel widgets",
+    "keywords": ["laravel", "widgets", "form", "list", "builder"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kEERill",
+            "email": "russia199797@mail.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Keerill\\Widgets\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Keerill\\Widgets\\Providers\\ServiceProvider"
+            ],
+            "aliases": {
+                "WidgetBuilder": "Keerill\\Widgets\\Facades\\WidgetBuilder"
+            }
+        }
+    },
+    "require": {}
+}

@@ -1,0 +1,41 @@
+<?php
+
+namespace DummyNamespace;
+
+use Keerill\Widgets\Forms\FormWidget;
+
+class DummyClass extends FormWidget
+{
+    /** 
+     * @var string $template Название шаблона формы 
+     */
+    protected $template = 'widgets::forms.layouts.base';
+
+    /**
+     * Validation Rules
+     * @return array
+     */
+    public function getValidationRules()
+    {
+        return [];
+    }
+
+    /**
+     * Register fields
+     * @return void
+     */
+    public function registerFields()
+    {
+        // Fields
+    }
+
+    /**
+     * Extend render options
+     * @param array $options
+     * @return array
+     */
+    protected function extendRenderOptions(array $options)
+    {
+        return $options;
+    }
+}
