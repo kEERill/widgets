@@ -48,5 +48,7 @@ class ServiceProvider extends ServiceProviderBase
         Route::macro('resourceWidget', function ($name, $controller, $only = [], $useAjax = false) {
             Route::resource($name, $controller)->only($only);
         });
+
+        $this->app->alias('WidgetBuilder', \Keeril\Widgets\Facades\WidgetBuilder::class);
     }
 }
