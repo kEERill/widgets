@@ -25,5 +25,8 @@
             }
         }
     },
-    "require": {}
+    "require": {
+        "laravelcollective/html": "^5.7",
+        "laravel/framework": "5.7.*"
+    }
 }
