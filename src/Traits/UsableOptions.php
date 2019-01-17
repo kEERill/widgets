@@ -17,7 +17,7 @@ trait UsableOptions
      * @param array $options Параметры, которые необходимо задать
      * @return self
      */
-    public function setOptions(array $options) : self
+    public function setOptions(array $options)
     {
         $config = array_only($options, $this->config);
 
@@ -41,12 +41,21 @@ trait UsableOptions
      * @param array $config Параметры
      * @return void
      */
-    public function fillConfig(array $config) : void
+    public function fillConfig(array $config)
     {
         foreach ($config as $option) {
             if (!in_array($option, $this->config)) {
                 $this->config[] = $option;
             }
         }
+    }
+
+    /**
+     * Возвращает массив параметров
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 }
