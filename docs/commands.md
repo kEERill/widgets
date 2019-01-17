@@ -1,3 +1,8 @@
+---
+title: This is my title
+layout: post
+---
+
 # Commands
 
 For easier use of widgets, the following commands have been added:
