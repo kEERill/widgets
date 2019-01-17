@@ -1,6 +1,7 @@
 # Documentation
 
 - [Commands](https://keerill.github.io/widgets/commands)
+- [Widget](https://keerill.github.io/widgets/widget)
 
 Installation
 ------------
