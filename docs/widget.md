@@ -1,6 +1,6 @@
 # Widget
 
-- [Creating widget][user-content-creating-widget]:
+- [Creating widget][creating-widget]
 
 Creating widget
 ---
