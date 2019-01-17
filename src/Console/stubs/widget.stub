@@ -12,12 +12,20 @@ class DummyClass extends Widget
     protected $template = 'widgets::layouts.base';
 
     /**
-     * Наследуем параметры, которые будут передоваться в view
      * @param array $options
      * @return array
      */
     protected function extendRenderOptions(array $options)
     {
         return $options;
+    }
+
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function render()
+    {
+        return parent::render();
     }
 }
