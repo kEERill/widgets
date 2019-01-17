@@ -1,6 +1,6 @@
 # Widget
 
-- [Creating widget](/#creating-widget)
+- [Creating widget](#creating-widget)
 
 Creating widget
 ---
