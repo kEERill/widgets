@@ -28,62 +28,62 @@ Configuration
 The `initConfig` function defines the parameters of this widget, for example:
 
 ```php
-    /**
-     * @var string Title, default value = null
+/**
+ * @var string Title, default value = null
+*/
+public $title = null;
+
+protected function initConfig()
+{
+    parent::initConfig();
+
+    /*
+    * Here we add our parameter with the name `title` to the list of already available parameters.
     */
-    public $title = null;
-
-    protected function initConfig()
-    {
-        parent::initConfig();
-
-        /*
-        * Here we add our parameter with the name `title` to the list of already available parameters.
-        */
-        $this->fillConfig(['title']);
-    }
+    $this->fillConfig(['title']);
+}
 ```
 
 The entire list of widget parameters can be obtained by the function `getConfig`
 
 ```php
-    $widget->getConfig()
+$widget->getConfig()
 ```
 
 Now, after we add a new parameter `title`, we can assign a value to it:
 
 ```php
-    $widget->setOptions([
-            'title' => 'This is title'
-        ]);
+$widget->setOptions([
+        'title' => 'This is title'
+    ]);
 ```
 
 Now we can get the value of this parameter:
 
 ```php
-    $widget->title
+$widget->title
 ```
 
 Or you can do it like this:
 
 ```php
-    /**
-     * @var string Title, default value = null
+/**
+ * @var string Title, default value = null
+*/
+protected $title = null;
+
+public function getTitle()
+{
+    return $this->title;
+}
+
+protected function initConfig()
+{
+    parent::initConfig();
+
+    /*
+    * Here we add our parameter with the name `title` to the list of already available parameters.
     */
-    protected $title = null;
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    protected function initConfig()
-    {
-        parent::initConfig();
-
-        /*
-        * Here we add our parameter with the name `title` to the list of already available parameters.
-        */
-        $this->fillConfig(['title']);
-    }
+    $this->fillConfig(['title']);
+}
 ```
