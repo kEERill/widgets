@@ -1,4 +1,4 @@
-<?php namespace Keeril\Widgets\Facades;
+<?php namespace Keerill\Widgets\Facades;
 
 use Illuminate\Support\Facades\Facade as Facade;
 
