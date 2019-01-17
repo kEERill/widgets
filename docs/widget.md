@@ -239,11 +239,11 @@ protected function prepareRender()
 In `widget/userinfo.blade.php`
 
 ```php
-{{ $widget->getDescription() }} // Thie is description
+echo $widget->getDescription() // Thie is description
 ```
 
 Render widget
 
 ```php
-{{ $widget->render(); }} // This is description widget
+echo $widget->render(); // This is description widget
 ```
