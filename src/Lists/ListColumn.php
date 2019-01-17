@@ -151,12 +151,12 @@ class ListColumn
 
     /**
      * Возвращает название столбца в виде массива:
-     * column[value] => ['column', 'value']
+     * column.value => ['column', 'value']
      * @return array
      */
     public function getColumnNameArray()
     {
-        return HtmlHelper::nameToArray($this->getColumnName());
+        return explode('.', $this->getColumnName());
     }
 
     /**

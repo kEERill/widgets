@@ -54,16 +54,6 @@ class ListWidget extends Widget
     protected $defaultSort = 'created_at desc';
 
     /**
-     * @var string $redirectUrl Страница, на которую будет вести ссылка в таблице
-     */
-    protected $redirectUrl = null;
-
-    /**
-     * @var string $redirectMessage Содержимое ссылки
-     */
-    protected $redirectMessage = 'Редактировать';
-
-    /**
      * @inheritdoc
      */
     protected function boot(array $options)
@@ -82,7 +72,7 @@ class ListWidget extends Widget
     protected function initConfig()
     {
         $this->fillConfig([
-                'recordsToPage', 'usePagination', 'defaultSort', 'redirectUrl'
+                'recordsToPage', 'usePagination', 'defaultSort'
             ]);
     }
 
@@ -141,38 +131,6 @@ class ListWidget extends Widget
     }
 
     /**
-     * Возваращет ссылку на запись
-     *
-     * @param Model $record
-     * @return string
-     */
-    public function getRedirectUrl(Model $record)
-    {
-        return route($this->redirectUrl, $record->getKey());
-    }
-
-    /**
-     * Возвращает название ссылки
-     *
-     * @param Model $record
-     * @return string
-     */
-    public function getRedirectMessage(Model $record)
-    {
-        return $this->redirectMessage;
-    }
-
-    /**
-     * Возвращает true если свойство redirectUrl заполнен
-     *
-     * @return bool
-     */
-    public function hasRedirectUrl()
-    {
-        return (bool) $this->redirectUrl;
-    }
-
-    /**
      * Добавляет столбец к данной талбице
      *
      * @param string $columnName Название столбца
@@ -213,7 +171,6 @@ class ListWidget extends Widget
 
     /**
      * Регистрация столбцов для таблицы
-     *
      * @return void
      */
     protected function registerListColumn() {}
@@ -228,6 +185,7 @@ class ListWidget extends Widget
         $className = $this->modelClass;
         return new $className ();
     }
+
     /**
      * @inheritdoc
      */

@@ -5,18 +5,10 @@
                 {{ $column->getColumnValue($record) }}
             </td>
         @endforeach
-
-        <td>
-            @if ($widget->hasRedirectUrl())
-                <a href="{{ $widget->getRedirectUrl($record) }}">
-                    {{ $widget->getRedirectMessage($record) }}
-                </a>
-            @endif
-        </td>
     </tr>
 @empty
     <tr>
-        <td colspan="{{ $widget->getColumns()->count() + 1 }}" class="uk-text-muted uk-text-center">
+        <td colspan="{{ $widget->getColumns()->count() + 1 }}">
             По Вашему запросу ничего не найдено
         </td>
     </tr>

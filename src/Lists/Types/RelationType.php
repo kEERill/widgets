@@ -1,4 +1,4 @@
-<?php namespace Keerill\Wdigets\Lists\Types;
+<?php namespace Keerill\Widgets\Lists\Types;
 
 use Keerill\Widgets\Lists\ListColumn;
 use Illuminate\Database\Eloquent\Model;

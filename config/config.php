@@ -93,7 +93,12 @@ return [
         /**
          * Вывод дат
          */
-        'datetime' => \Keerill\Widgets\Lists\Types\DateTimeType::class
+        'datetime' => \Keerill\Widgets\Lists\Types\DateTimeType::class,
+        
+        /**
+         * Вывод значения
+         */
+        'value' => \Keerill\Widgets\Lists\Types\ValueType::class,
     ],
 
     /**

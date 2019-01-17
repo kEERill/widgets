@@ -27,6 +27,15 @@ class DummyClass extends ListWidget
     protected $modelClass = null;
 
     /**
+     * Регистрация столбцов для таблицы
+     * @return void
+     */
+    protected function registerListColumn() 
+    {
+        // Columns
+    }
+
+    /**
      * Наследуем параметры, которые будут передоваться в view
      * @param array $options
      * @return array
