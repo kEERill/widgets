@@ -1,10 +1,11 @@
 # Widget
 
-- [Creating widget](#creating-widget)
-- [Init widget](#init-widget)
+- [Creating](#creating)
+- [Initialization](#initialization)
 - [Configuration](#configuration)
+- [Rendering](#rendering)
 
-Creating widget
+Creating
 ---
 
 Let's start with the easiest, this is creating a new widget
@@ -24,7 +25,7 @@ $widget = WidgetBuilder::make(\App\Widgets\UserInfo::class, ['optionName' => 'op
 echo $widget->render()
 ```
 
-Init widget
+Initialization
 ---
 
 When creating an instance of a widget, the following functions are called inside the widget: `initConfig`, and after `boot`.
@@ -152,4 +153,97 @@ You can also assign parameters when creating a widget:
 $widget = WidgetBuilder::make(\App\Widgets\UserInfo::class, ['title' => 'This is title']);
 
 echo $widget->getTitle() // This is title
+```
+
+
+Rendering
+---
+
+Render widget is called by the `render` method.
+
+```php
+echo $widget->render()
+```
+
+Before starting to render, the widget calls the `prepareRender` function, where you can initialize your variables, etc.
+
+```php
+/**
+ * @var string Description
+ */
+protected $description = null;
+
+public function getDescription()
+{
+    return $this->description;
+}
+
+protected function prepareRender()
+{
+    $this->description = 'This is description widget';
+}
+```
+But there is one thing, but if you do not call the `render` method, then accordingly the `prepareRender` method will not be called, therefore, the `description` variable will be empty
+
+```php
+echo $widget->getDescription() // null
+```
+
+If you need this variable anyway, use the `boot` method.
+
+```php
+/**
+ * @var string Description
+ */
+protected $description = null;
+
+public function getDescription()
+{
+    return $this->description;
+}
+
+protected function boot(array $options = [])
+{
+    $this->description = 'This is description widget';
+}
+
+...
+
+echo $widget->getDescription() // This is description widget
+```
+
+Now let's move on to the widget renderer itself. There is a `template` variable in the widget, which determines which template will be rendered, and you should remember that the `widget` variable will be passed to this template, i.e. instance of this widget.
+
+```php
+/**
+ * @var string Description
+ */
+protected $description = null;
+
+/**
+ * @var string Template
+ */
+protected $template = 'widget.userinfo';
+
+public function getDescription()
+{
+    return $this->description;
+}
+
+protected function prepareRender()
+{
+    $this->description = 'This is description widget';
+}
+```
+
+In `widget/userinfo.blade.php`
+
+```php
+{{ $widget->getDescription() }} // Thie is description
+```
+
+Render widget
+
+```php
+{{ $widget->render(); }} // This is description widget
 ```
