@@ -1,7 +1,3 @@
----
-title: Commands
----
-
 # Commands
 
 For easier use of widgets, the following commands have been added:
