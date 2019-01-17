@@ -239,7 +239,7 @@ protected function prepareRender()
 In `widget/userinfo.blade.php`
 
 ```php
-echo $widget->getDescription() // Thie is description
+echo $widget->getDescription() // This is description widget
 ```
 
 Render widget
