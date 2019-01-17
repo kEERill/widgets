@@ -1,3 +1,5 @@
+[Return back](https://keerill.github.io/widgets)
+
 # Commands
 
 For easier use of widgets, the following commands have been added:
