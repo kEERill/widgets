@@ -56,6 +56,6 @@ class RelationType extends ListColumn
      */
     public function extendQuery(Builder $query)
     {
-        $query->with($this->{$this->getColumnName()} . ':id,'. $this->getSelect());
+        $query->with($this->getColumnName() . ':id,'. $this->getSelect());
     }
 }

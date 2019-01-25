@@ -25,9 +25,12 @@ class ServiceProvider extends ServiceProviderBase
         $this->loadViewsFrom(__DIR__ . '/../../views', 'widgets');
 
         $this->publishes([
-            __DIR__ . '/../../views' => base_path('resources/views/vendor/widgets'),
+            __DIR__ . '/../../views' => base_path('resources/views/vendor/widgets')
+        ], 'widgets-view');
+
+        $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('widgets.php')
-        ]);
+        ], 'widgets-config');
     }
 
     /**
