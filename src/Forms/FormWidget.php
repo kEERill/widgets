@@ -2,28 +2,28 @@
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Keerill\Widgets\Forms\Types\GroupType;
 use Keerill\Widgets\Widget as WidgetBase;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Validation\Validator;
 use Keerill\Widgets\Exceptions\FormFieldException;
+use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
 
 class FormWidget extends WidgetBase
 {
     /**
      * @var string Метод формы [POST, GET, PUT, DELETE]
      */
-    public $method = 'POST';
+    protected $method = 'POST';
 
     /**
      * @var string Action URL
      */
-    public $url = null;
+    protected $url = null;
 
     /**
      * @var string Css Styles формы
      */
-    public $wrapperClass = null;
+    protected $wrapperClass = null;
 
     /**
      * @var string Возвращает название роута
@@ -33,7 +33,7 @@ class FormWidget extends WidgetBase
     /** 
      * @var string $template Название шаблона формы 
      */
-    protected $template = 'widgets::forms.layouts.base';
+    protected $template = 'widgets::forms.layouts.default';
 
     /**
      * @var Model Модель формы
@@ -61,21 +61,54 @@ class FormWidget extends WidgetBase
     protected $validationMessages = [];
 
     /**
+     * @var boolean Использование отправки файлов в форме
+     */
+    protected $useFiles = false;
+
+    /**
      * @var array $availableFiledTypes Массив доступных типов полей
      */
     protected $availableFieldTypes = null;
 
     /**
+     * @var array Атрибуты формы
+     */
+    protected $formAttributes = [];
+
+    /**
+     * @var array
+     */
+    private $formAttributesReserved = ['method', 'url', 'files', 'action', 'method'];
+
+    /**
      * @inheritdoc
      */
     protected function boot(array $options)
-    {
-        parent::boot($options);
-
+    { 
         /**
-         * Регистрируем поля формы
+         * Регистрация столбцов виджета
          */
         $this->registerFields();
+
+        parent::boot($options);
+    }
+
+    /**
+     * Возвращает true, если в форме есть загрузка файлов
+     * @return boolean
+     */
+    public function getUseFiles()
+    {
+        return (bool) $this->useFiles;
+    }
+
+    /**
+     * Возвращает true, если в форме есть загрузка файлов
+     * @return boolean
+     */
+    public function setUseFiles(bool $useFiles)
+    {
+        return $this->useFiles = $useFiles;
     }
 
     /**
@@ -88,12 +121,69 @@ class FormWidget extends WidgetBase
     }
 
     /**
+     * Изменяет стили формы
+     * @param string
+     * @return self
+     */
+    public function setWrapperClass(string $wrapperClass)
+    {
+        $this->wrapperClass = $wrapperClass;
+        return $this;
+    }
+
+    /**
+     * Возвращает атрибуты для контейнера формы
+     * @return array
+     */
+    public function getWrapperAttributes()
+    {
+        $attributes = config('widgets.attributes.formWrapper', []);
+
+        if ($this->getWrapperClass() !== null) {
+            $attributes['class'][] = $this->getWrapperClass();
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Возвращает атрибуты для тэга FORM "<form attributes>"
+     * @return array
+     */
+    public function getFormAttributes()
+    {
+        $attributes = config('widgets.attributes.form', []);
+
+        if (is_array($this->formAttributes) && count($this->formAttributes) > 0) {
+            $attributes = array_merge($attributes, $this->formAttributes);
+        }
+
+        /**
+         * Удаляем запрещенные атрибуты
+         */
+        $attributes = array_except($attributes, $this->formAttributesReserved);
+
+        return $attributes;
+    }
+
+    /**
      * Возвращает метод отправки запроса фомой
      * @return string
      */
     public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * Изменяет метод формы
+     * @param string
+     * @return self
+     */
+    public function setMethod(string $method)
+    {
+        $this->method = $method;
+        return $this;
     }
 
     /**
@@ -124,6 +214,17 @@ class FormWidget extends WidgetBase
     }
 
     /**
+     * Изменяет ссылку формы
+     * @param string
+     * @return self
+     */
+    public function setUrl(string $url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    /**
      * Возвращает параметры для генерации ссылки роута
      * @return array
      */
@@ -150,7 +251,7 @@ class FormWidget extends WidgetBase
     {
         if (count($this->fields) > 0) {
             return $this->fields->mapWithKeys(function (FormField $field) {
-                return [$field->getName() => $field->label];
+                return $field instanceof ValueInterface ? $field->getValidationName() : [];
             })->toArray();
         }
 
@@ -247,7 +348,9 @@ class FormWidget extends WidgetBase
     {
         if (count($this->fields) > 0) {
             foreach ($this->fields as $field) {
-                $field->setValue($field->getValueByData($data, $field->getDefault()));
+                if ($field instanceof ValueInterface) {
+                    $field->setDataValue($data);
+                }
             }
         }
 
@@ -264,7 +367,9 @@ class FormWidget extends WidgetBase
 
         if (count($this->fields) > 0) {
             foreach ($this->fields as $field) {
-                array_set($data, $field->getName(), $field->getValue());
+                if ($field instanceof ValueInterface) {
+                    $data = $field->getDataValue($data);
+                }
             }
         }
 
@@ -401,7 +506,11 @@ class FormWidget extends WidgetBase
      */
     public function getFieldValue(string $fieldName)
     {
-        return $this->getField($fieldName)->getValue();
+        if (($field = $this->getField($fieldName)) && $field instanceof ValueInterface) {
+            return $field->getValue(); 
+        }
+
+        return null;
     }
 
     /**
@@ -441,7 +550,7 @@ class FormWidget extends WidgetBase
      */
     protected function initConfig()
     {
-        $this->fillConfig([
+        $this->addConfigOptionsWithMethods([
             'method', 'url', 'wrapperClass', 'modelId', 'routeName'
         ]);
     }
@@ -474,12 +583,15 @@ class FormWidget extends WidgetBase
          */
         $this->setData($data);
 
+
         $result = [];
 
         if (count($this->fields) > 0) {
             foreach ($this->fields as $field) {
-                if ($field->getSaveValue($field->getValue()) != FormField::NOT_SAVE_DATA) {
-                    array_set($result, $field->getName(), $field->getSaveValue($field->getValue()));
+                if ($field instanceof ValueInterface) {
+                    if ($field->getSaveValue() != FormField::NOT_SAVE_DATA) {
+                        $result = $field->getSaveData($result);
+                    }
                 }
             }
         }

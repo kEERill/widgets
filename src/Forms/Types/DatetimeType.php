@@ -12,9 +12,14 @@ class DatetimeType extends InputType
     /**
      * @inheritdoc
      */
-    public function getSaveValue($value)
+    public function setValue($value)
     {
-        $value = parent::getSaveValue($value);
-        return !$value || $value == self::NOT_SAVE_DATA ? self::NOT_SAVE_DATA : Carbon::parse($value);
+        if ($value instanceof Carbon) {
+            $this->value = $value;
+            return $this;
+        }
+
+        $this->value = Carbon::parse($value);
+        return $this;
     }
 }

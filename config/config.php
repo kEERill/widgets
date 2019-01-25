@@ -43,7 +43,7 @@ return [
         /**
          * Поле для паролей, данное поле автоматически шифрует данные
          */
-        'password' => \Keerill\Widgets\Forms\Types\InputType::class,
+        'password' => \Keerill\Widgets\Forms\Types\PasswordType::class,
 
         /**
          * Поле выбора даты
@@ -73,7 +73,12 @@ return [
         /**
          * Шаблон
          */
-        'template' => \Keerill\Widgets\Forms\Types\TemplateType::class
+        'template' => \Keerill\Widgets\Forms\Types\TemplateType::class,
+
+        /**
+         * Кнопка
+         */
+        'button' => \Keerill\Widgets\Forms\Types\ButtonType::class,
     ],
 
     /**
@@ -138,7 +143,7 @@ return [
          * Атрибуты для заголовка
          */
         'label' => [
-            'class' => 'form-label'
+            'class' => ['form-label']
         ],
 
         /**
@@ -152,7 +157,18 @@ return [
          * Атрибуты для блока, в ктором находяться заголовок и поле
          */
         'group' => [
-            'class' => 'form-group'
+            'class' => ['form-group']
+        ],
+
+        /**
+         * Атрибуты для описания поля
+         */
+        'comment' => [
+            'class' => ['form-text', 'text-muted']
+        ],
+
+        'table' => [
+            'class' => ['table']
         ]
     ],
 
@@ -166,13 +182,13 @@ return [
          */
         'checkbox' => [
             'label' => [
-                'class' => 'form-check-label'
+                'class' => ['form-check-label']
             ],
             'input' => [
-                'class' => 'form-check-input'
+                'class' => ['form-check-input']
             ],
             'group' => [
-                'class' => 'form-check'
+                'class' => ['form-check']
             ]
         ],
 
@@ -184,19 +200,28 @@ return [
                 /**
                  * Название класса для заголовка
                  */
-                'class' => 'form-check-label'
+                'class' => ['form-check-label']
             ],
             'input' => [
                 /**
                  * Название класса для инпута, т.е. флажка
                  */
-                'class' => 'form-check-input'
+                'class' => ['form-check-input']
             ],
             'group' => [
                 /**
                  * Название класса для div блока, в котором находиться данный инпут и заголовок
                  */
-                'class' => 'form-check'
+                'class' => ['form-check']
+            ]
+        ],
+
+        /**
+         * Атрибуты для кнопки
+         */
+        'button' => [
+            'input' => [
+                'class' => ['btn']
             ]
         ]
     ]

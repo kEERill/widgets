@@ -2,7 +2,7 @@
     {!! $widget->styles() !!}
 @endpush
 
-<table class="table">
+<table <?= Html::attributes($widget->getTableAttributes()) ?>>
     <thead>
         @include('widgets::lists.head', ['widget' => $widget])
     </thead>
@@ -11,12 +11,7 @@
     </tbody>
 </table>
 
-<div>
-    {!! $widget->getRecords()->render() !!}
-    <span>
-        Отображено записей: {{ $widget->getRecords()->firstItem() }} - {{ $widget->getRecords()->lastItem() }} из {{ $widget->getRecords()->total() }}
-    </span>
-</div>
+@include('widgets::lists.pagination', ['widget' => $widget])
 
 @push ('scripts')
     {!! $widget->scripts() !!}

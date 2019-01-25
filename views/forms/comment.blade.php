@@ -1,3 +1,5 @@
 @if ($formField->getComment())
-    {{ $formField->getComment() }}
+    <small <?= Html::attributes($formField->getCommentAttributes()) ?>>
+        {{ $formField->getComment() }}
+    </small>
 @endif

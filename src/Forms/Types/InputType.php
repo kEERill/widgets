@@ -1,21 +1,29 @@
 <?php namespace Keerill\Widgets\Forms\Types;
 
-class InputType extends \Keerill\Widgets\Forms\FormField
+use Keerill\Widgets\Forms\Types\Helpers\Label;
+use Keerill\Widgets\Forms\Types\Helpers\Value;
+use Keerill\Widgets\Forms\Types\Helpers\Comment;
+use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
+
+
+class InputType extends \Keerill\Widgets\Forms\FormField implements ValueInterface
 {
+    use Label, Comment, Value;
+
     /**
      * @var string Класс для DOM input поля
      */
-    public $cssClass = false;
+    protected $inputClass = null;
 
     /**
      * @var boolean Если true, то поле будет недоступно для редактирования
      */
-    public $disabled = false;
+    protected $disabled = false;
 
     /**
      * @var string Заглушка для пустого поля
      */
-    public $placeholder = null;
+    protected $placeholder = null;
 
     /**
      * @var string
@@ -26,11 +34,32 @@ class InputType extends \Keerill\Widgets\Forms\FormField
      * Инифиализация поля
      * @return void
      */
-    public function boot()
+    public function initConfig()
     {
-        $this->fillConfig([
-            'cssClass', 'disabled', 'placeholder'
+        parent::initConfig();
+        
+        $this->addConfigOptionsWithMethods([
+            'label', 'labelClass', 'comment', 'commentClass', 'inputClass', 'disabled', 'placeholder', 'value', 'default'
         ]);
+    }
+
+    /**
+     * Название полей для валидации
+     * @return array
+     */
+    public function getValidationName()
+    {
+        return [$this->getName() => $this->getLabel()];
+    }
+
+    /**
+     * Возвращает значение поля, если значение отсутствует, то возвращает
+     * стандартное значение
+     * @return string
+     */
+    public function getValue()
+    {
+        return ($this->getDisabled()) ? null : $this->value ?: $this->getDefault();
     }
 
     /**
@@ -39,33 +68,41 @@ class InputType extends \Keerill\Widgets\Forms\FormField
      */
     public function getInputAttributes()
     {
-        $cssClasses = array_wrap(config('widgets.attributes.input'));
+        $attributes = array_wrap(config('widgets.attributes.input'));
 
         if (
             ($customAttributes = config("widgets.customAttributes.{$this->getType()}.input")) &&
             is_array($customAttributes)
         ) {
-            $cssClasses = array_merge($cssClasses, $customAttributes);
+            $attributes = array_merge($attributes, $customAttributes);
         }
 
         if ($this->getPlaceholder()) {
-            $cssClasses['placeholder'] = $this->getPlaceholder();
+            $attributes['placeholder'] = $this->getPlaceholder();
+        }
+
+        if ($this->getInputClass() !== null) {
+            $attributes['class'][] = $this->getInputClass();
         }
 
         $errors = request()->session()->get('errors');
 
         if ($errors && $errors->hasBag('default') && $errors->getBag('default')->has($this->getName())) {
-            $cssClasses['class'][] = config("widgets.customCssStyles.{$this->getType()}.input-danger") ?: config('widgets.cssStyles.input-danger');
+            $attributes['class'][] = config("widgets.customCssStyles.{$this->getType()}.input-danger") ?: config('widgets.cssStyles.input-danger');
+        }
+
+        if ($this->getDisabled()) {
+            $attributes[] = 'disabled';
         }
         
-        return $cssClasses;
+        return $attributes;
     }
 
     /**
      * Проверка на то, что поле выключено
      * @return bool
      */
-    public function hasDisabled()
+    public function getDisabled()
     {
         return (bool) $this->disabled;
     }
@@ -74,22 +111,10 @@ class InputType extends \Keerill\Widgets\Forms\FormField
      * Отключает поле
      * @return InputType
      */
-    public function disabled()
+    public function setDisabled(bool $disabled)
     {
-        $this->disabled = true;
+        $this->disabled = $disabled;
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSaveValue($value)
-    {
-        if ($this->disabled) {
-            return self::NOT_SAVE_DATA;
-        }
-
-        return !$value && $this->getDefault() ? $this->getDefault() : $value;
     }
 
     /**
@@ -109,6 +134,26 @@ class InputType extends \Keerill\Widgets\Forms\FormField
     public function setPlaceholder(string $placeholder)
     {
         $this->placeholder = $placeholder;
+        return $this;
+    }
+
+    /**
+     * Возвращает классы для поля
+     * @return string
+     */
+    public function getInputClass()
+    {
+        return $this->inputClass;
+    }
+
+    /**
+     * Изменяет классы для поля
+     * @param string
+     * @return self
+     */
+    public function setInputClass(string $inputClass)
+    {
+        $this->inputClass = $inputClass;
         return $this;
     }
 }

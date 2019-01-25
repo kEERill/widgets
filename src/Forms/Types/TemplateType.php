@@ -17,7 +17,7 @@ class TemplateType extends \Keerill\Widgets\Forms\FormField
     {
         parent::initConfig();
 
-        $this->fillConfig([
+        $this->addConfigOptionsWithMethods([
             'template'
         ]);
     }

@@ -4,6 +4,7 @@ use Keerill\Widgets\Widget;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ListWidget extends Widget
@@ -27,6 +28,11 @@ class ListWidget extends Widget
      * @var boolean $usePagination Показывает пагинацию
      */
     protected $usePagination = true;
+
+    /**
+     * @var array $tableAttributes Атрибуты таблицы
+     */
+    protected $tableAttributes = [];
 
     /**
      * @var Model $modelClass Класс модели, которые будем выводить в таблице
@@ -57,13 +63,13 @@ class ListWidget extends Widget
      * @inheritdoc
      */
     protected function boot(array $options)
-    {
-        parent::boot($options);
-
+    { 
         /**
          * Регистрация столбцов виджета
          */
         $this->registerListColumn();
+
+        parent::boot($options);
     }
 
     /**
@@ -71,7 +77,7 @@ class ListWidget extends Widget
      */
     protected function initConfig()
     {
-        $this->fillConfig([
+        $this->addConfigOptions([
                 'recordsToPage', 'usePagination', 'defaultSort'
             ]);
     }
@@ -102,7 +108,7 @@ class ListWidget extends Widget
          * Делаем проверку, что данный тип поля существует в системе
          */
         if (!in_array($columnType, array_keys($this->getAvailableColumnTypes()))) {
-            throw new \InvalidArgumentException(
+            throw new ListException(
                 sprintf('Тип столбца [%s] не существует', $columnType)
             );
         }
@@ -111,8 +117,16 @@ class ListWidget extends Widget
     }
 
     /**
+     * Возвращает атрибуты для таблицы
+     * @return array
+     */
+    public function getTableAttributes()
+    {
+        return array_merge(config('widgets.attributes.table', []), array_wrap($this->tableAttributes));
+    }
+
+    /**
      * Возвращает колонки таблицы
-     *
      * @return Collection
      */
     public function getColumns()

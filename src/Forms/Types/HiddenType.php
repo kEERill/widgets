@@ -1,7 +1,13 @@
 <?php namespace Keerill\Widgets\Forms\Types;
 
-class HiddenType extends \Keerill\Widgets\Forms\FormField
+use Keerill\Widgets\Forms\Types\Helpers\Value;
+use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
+
+
+class HiddenType extends \Keerill\Widgets\Forms\FormField implements ValueInterface
 {
+    use Value;
+
     /**
      * @var string $template Название шаблона для данного поля
      */
@@ -12,24 +18,16 @@ class HiddenType extends \Keerill\Widgets\Forms\FormField
      */
     public function boot()
     {
-        $this->fillConfig([
-            'value'
+        $this->addConfigOptionsWithMethods([
+            'value', 'default'
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function getSaveValue($value)
+    public function getSaveValue()
     {
         return self::NOT_SAVE_DATA;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 }

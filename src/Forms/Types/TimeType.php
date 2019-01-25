@@ -12,10 +12,9 @@ class TimeType extends InputType
     /**
      * @inheritdoc
      */
-    public function getSaveValue($value)
+    public function setValue($value)
     {
-        $value = parent::getSaveValue($value);
-
-        return !$value || $value == self::NOT_SAVE_DATA ? self::NOT_SAVE_DATA : Carbon::createFromTimeString($value);
+        $this->value = Carbon::createFromTimeString($value);
+        return $this;
     }
 }

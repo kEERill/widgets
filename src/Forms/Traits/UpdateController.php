@@ -1,4 +1,4 @@
-<?php namespace Keerill\Widgets\Forms\Traits\Controllers;
+<?php namespace Keerill\Widgets\Forms\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Forms\Context\UpdateForm;

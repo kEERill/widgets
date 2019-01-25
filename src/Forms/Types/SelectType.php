@@ -5,7 +5,7 @@ class SelectType extends InputType
     /**
      * @var array Варианты для селекта
      */
-    public $options = [];
+    public $selectOptions = [];
 
     /**
      * @inheritdoc
@@ -19,8 +19,8 @@ class SelectType extends InputType
     {
         parent::initConfig();
         
-        $this->fillConfig([
-            'options'
+        $this->addConfigOptionsWithMethods([
+            'selectOptions'
         ]);
     }
 
@@ -30,7 +30,7 @@ class SelectType extends InputType
      */
     public function getSelectOptions()
     {
-        return $this->options;
+        return $this->selectOptions;
     }
 
     /**
@@ -40,7 +40,7 @@ class SelectType extends InputType
      */
     public function setSelectOptions(array $options)
     {
-        $this->options = $options;
+        $this->selectOptions = $options;
         return $this;
     }
 }

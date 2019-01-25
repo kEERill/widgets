@@ -19,7 +19,7 @@ class MultiSelectType extends SelectType
     {
         parent::initConfig();
         
-        $this->fillConfig([
+        $this->addConfigOptions([
             'maxSelect'
         ]);
     }

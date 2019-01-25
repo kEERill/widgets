@@ -1,3 +1,3 @@
 @foreach ($widget->getColumns() as $name => $column)
-    <th>{{ $column->getTitle() }}</th>
+    <th @if ($column->getWidth()) style="width: {{ $column->getWidth() }}" @endif>{{ $column->getTitle() }}</th>
 @endforeach

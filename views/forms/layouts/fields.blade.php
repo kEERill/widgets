@@ -1,11 +1,17 @@
-@extends('widgets::forms.layouts.default')
+@push ('styles')
+    {!! $widget->styles() !!}
+@endpush
 
-@section('formContent')
-    <div 
-        class="{{ $widget->wrapperClass }}">
+@include('widgets::forms.formErrors')
 
-        @foreach ($widgets->getFields() as $formField)
-            {!! $formField->render() !!}
-        @endforeach
-    </div>
-@endsection
+<div 
+    <?= Html::attributes($widget->getWrapperAttributes()) ?>>
+
+    @foreach ($widget->getFields() as $formField)
+        {!! $formField->render() !!}
+    @endforeach
+</div>
+
+@push ('scripts')
+    {!! $widget->scripts() !!}
+@endpush

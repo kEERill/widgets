@@ -12,27 +12,27 @@ class ListColumn
     /**
      * @var string Название столбца
      */
-    public $columnName = null;
+    protected $columnName = null;
 
     /**
      * @var string Заголовок столбца
      */
-    public $title = null;
+    protected $title = null;
 
     /**
      * @var string Значение по умолчанию
      */
-    public $default = null;
+    protected $default = null;
 
     /**
      * @var integer|null Ширина столбца
      */
-    public $width = null;
+    protected $width = null;
 
     /**
      * @var integer|null Стили для данного столбца
      */
-    public $cssClass = null;
+    protected $cssClass = null;
 
     /**
      * @var string Тип столбца
@@ -84,7 +84,7 @@ class ListColumn
      */
     protected function initConfig() 
     {
-        $this->fillConfig([
+        $this->addConfigOptionsWithMethods([
             'title', 'default', 'cssClass', 'width'
         ]);
     }
@@ -108,9 +108,20 @@ class ListColumn
      * Возвращает ширину столбца
      * @return int|null
      */
-    public function getWidth(): ?int
+    public function getWidth()
     {
         return $this->width;
+    }
+
+    /**
+     * Задает новую ширину столбца
+     * @param int
+     * @return self
+     */
+    public function setWidth(int $width)
+    {
+        $this->width = $width;
+        return $this;
     }
 
     /**
@@ -123,12 +134,54 @@ class ListColumn
     }
 
     /**
+     * Задает новое стандартное значение столбца
+     * @param string
+     * @return self
+     */
+    public function setDefault(string $default)
+    {
+        $this->default = $default;
+        return $this;
+    }
+
+    /**
      * Возвращает заголовок столбца
      * @return string
      */
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Присваивает новый заголовок столбцу
+     * @param string
+     * @return self
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * Возвращает класс для столбца
+     * @return string
+     */
+    public function getCssClass()
+    {
+        return $this->cssClass;
+    }
+
+    /**
+     * Задает класс для столбца
+     * @param string
+     * @return self
+     */
+    public function setCssClass(string $cssClass)
+    {
+        $this->cssClass = $cssClass;
+        return $this;
     }
 
     /**
@@ -180,7 +233,9 @@ class ListColumn
         $result = $record;
 
         foreach ($data as $attribute) {
-            $result = $result->{$attribute};
+            if (isset($result->{$attribute})) {
+                $result = $result->{$attribute};
+            }
         }
 
         return $result;

@@ -48,5 +48,5 @@ trait WidgetController
      * @param WidgetBase $widget
      * @return void
      */
-    protected function extendWidgetCreate(WidgetBase $widget): void {}
+    protected function extendWidgetCreate(WidgetBase $widget) {}
 }

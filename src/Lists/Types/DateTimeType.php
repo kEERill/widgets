@@ -18,7 +18,7 @@ class DateTimeType extends ListColumn
     {
         parent::initConfig();
         
-        $this->fillConfig([
+        $this->addConfigOptions([
             'format'
         ]);
     }

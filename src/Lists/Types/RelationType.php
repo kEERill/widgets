@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 class RelationType extends ListColumn
 {
     /**
-     * @var string Формат вывода даты
+     * @var string Столбец, который требуется взять из бд
      */
     protected $select = 'id';
 
@@ -18,9 +18,29 @@ class RelationType extends ListColumn
     {
         parent::initConfig();
         
-        $this->fillConfig([
+        $this->addConfigOptionsWithMethods([
             'select'
         ]);
+    }
+
+    /**
+     * Возвращает столбец, который требуется взять из бд
+     * @return string
+     */
+    public function getSelect()
+    {
+        return $this->select;
+    }
+
+    /**
+     * Задает параметр select
+     * @param string
+     * @return sef
+     */
+    public function setSelect(string $select)
+    {
+        $this->select = $select;
+        return $this;
     }
 
     /**
@@ -28,7 +48,7 @@ class RelationType extends ListColumn
      */
     protected function getColumnValueByData(Model $record, array $data)
     {
-        return $record->{$this->columnName}->{$this->select};
+        return $record->{$this->getColumnName()}->{$this->getSelect()};
     }
     
     /**
@@ -36,6 +56,6 @@ class RelationType extends ListColumn
      */
     public function extendQuery(Builder $query)
     {
-        $query->with($this->columnName . ':id,'. $this->select);
+        $query->with($this->{$this->getColumnName()} . ':id,'. $this->getSelect());
     }
 }

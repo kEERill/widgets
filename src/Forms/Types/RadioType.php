@@ -7,7 +7,7 @@ class RadioType extends InputType
     /**
      * @var array Возможные варианты для кнопок
      */
-    public $options = [];
+    protected $selectOptions = [];
     
     /**
      * @inheritdoc
@@ -17,17 +17,33 @@ class RadioType extends InputType
     /**
      * @inheritdoc
      */
-    protected $defaultCssClass = 'uk-radio';
-
-    /**
-     * @inheritdoc
-     */
     public function initConfig()
     {
         parent::initConfig();
         
-        $this->fillConfig([
-            'options'
+        $this->addConfigOptionsWithMethods([
+            'selectOptions'
         ]);
+    }
+
+    /**
+     * Возвращает список возможных вариантов для выбора
+     * @return array
+     */
+    public function getSelectOptions()
+    {
+        return $this->selectOptions;
+    }
+
+
+    /**
+     * Изменяет доступные варианты выбора для поля
+     * @param array
+     * @return self
+     */
+    public function setSelectOptions(array $options)
+    {
+        $this->selectOptions = $options;
+        return $this;
     }
 }

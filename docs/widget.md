@@ -47,14 +47,22 @@ Example:
 */
 public $title = null;
 
+public $description = null;
+
 protected function initConfig()
 {
     parent::initConfig();
 
     /*
-    * Here we add our parameter with the name `title` to the list of already available parameters.
+     * Add parameters `title` and `description`
+     */
+    $this->addConfigOption('title');
+    $this->addConfigOption('description');
+
+    /*
+    * or Bulk Add Parameters
     */
-    $this->fillConfig(['title']);
+    $this->addConfigOptions(['title', 'description']);
 }
 ```
 
@@ -84,7 +92,7 @@ protected function initConfig()
     /*
     * Here we add our parameter with the name `title` to the list of already available parameters.
     */
-    $this->fillConfig(['title']);
+    $this->addConfigOption('title');
 }
 ```
 
@@ -94,7 +102,9 @@ Now we can get the value of this parameter:
 $widget->getTitle()
 ```
 
-Redefinition of parameters - a case when you assign checks to a parameter when assigning a value to a parameter. For this situation there is a solution:
+Redefinition of parameters - a case when you assign checks to a parameter when assigning a value to a parameter.
+
+In order that the filling of parameters was called through a function, this parameter should be added to the list via the function `addConfigMethod`:
 
 ```php
 /**
@@ -107,7 +117,7 @@ public function getTitle()
     return $this->title;
 }
 
-protected function setTitleOption($value)
+protected function setTitle($value)
 {
     if (is_string($value)) {
         $this->title = $value;
@@ -121,11 +131,42 @@ protected function initConfig()
     /*
     * Here we add our parameter with the name `title` to the list of already available parameters.
     */
-    $this->fillConfig(['title']);
+    $this->addConfigOption('title');
+    $this->addConfigMethod('title');
 }
 ```
 
-Those. before the widget assigns a parameter value, it looks for the `setParamNameOption` function. If the function is present, the parameter assignment is passed to it.
+Those. before the widget assigns a parameter value, it looks for the `setParamName` function. If the function is present, the parameter assignment is passed to it.
+
+Like the `addConfigOption` method, the `addConfigMethod` function has an analog for bulk filling `addConfigMethods`.
+
+```php
+/**
+ * @var string Title, default value = null
+*/
+public $title = null;
+
+public $description = null;
+
+/* 
+    ... 
+        setTitle, setDescription 
+    ... 
+*/
+
+protected function initConfig()
+{
+    parent::initConfig();
+
+    $this->addConfigOptions(['title', 'description']);
+    $this->addConfigMethods(['title', 'description']);
+
+    /**
+     * If all parameters can be filled in through a function call, then use this method.
+     */
+    $this->addConfigOptionsWithMethods(['title', 'description']);
+}
+```
 
 Assigning values to a widget
 ---
