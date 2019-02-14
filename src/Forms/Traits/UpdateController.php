@@ -45,7 +45,7 @@ trait UpdateController
         /**
          * Создаем форму
          */
-        $formWidget = $this->makeWidget($this->updateFormClass, $formOptions)->withModelId($modelId);
+        $formWidget = $this->makeWidget($this->updateFormClass, $formOptions)->setModelId($modelId);
         $this->extendFormUpdateContext($formWidget);
 
         return $formWidget;

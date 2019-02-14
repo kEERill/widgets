@@ -3,7 +3,6 @@
 use Keerill\Widgets\Widget;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -191,13 +190,20 @@ class ListWidget extends Widget
 
     /**
      * Создание модели
-     *
      * @return Model
      */
     protected function createModel()
     {
         $className = $this->modelClass;
         return new $className ();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getQuery()
+    {
+        return $this->createModel()->newQuery();
     }
 
     /**
@@ -220,7 +226,7 @@ class ListWidget extends Widget
         /**
          * Создаем новый запрос
          */
-        $query = $this->createModel()->newQuery();
+        $query = $this->getQuery();
 
         /**
          * Делаем наследование столбцов, что бы столбца добавили в запрос, все что требуется
@@ -239,8 +245,10 @@ class ListWidget extends Widget
         /**
          * Сортировка столбцов
          */
-        list($orderColumn, $orderType) = explode(' ', $this->defaultSort);
-        $query->orderBy($orderColumn, $orderType);
+        if ($this->defaultSort != null) {
+            list($orderColumn, $orderType) = explode(' ', $this->defaultSort);
+            $query->orderBy($orderColumn, $orderType);
+        }
 
         /**
          * Полученный результат сохраняем
@@ -253,10 +261,10 @@ class ListWidget extends Widget
     /**
      * Наследуем запрос
      *
-     * @param Builder $query
+     * @param $query
      * @return void
      */
-    protected function extendQuery(Builder $query) {}
+    protected function extendQuery($query) {}
 
     /**
      * Здесь можно задавать кастомные стили для таблицы

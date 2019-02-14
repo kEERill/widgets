@@ -2,7 +2,7 @@
     <tr @if ($classes = $widget->extendRowClass($record)) class="{{ $classes }}" @endif>
         @foreach ($widget->getColumns() as $columnName => $column)
             <td class="{{ $column->getCssClass() }}" @if ($column->getWidth()) style="width: {{ $column->getWidth() }}" @endif>
-                {{ $column->getColumnValue($record) }}
+                {{ $column->getFormatColumnValue($record) }}
             </td>
         @endforeach
     </tr>

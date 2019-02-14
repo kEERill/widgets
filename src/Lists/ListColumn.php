@@ -2,7 +2,6 @@
 
 use Keerill\Widgets\Traits\Events;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Keerill\Widgets\Traits\UsableOptions;
 
 class ListColumn
@@ -43,6 +42,11 @@ class ListColumn
      * @var ListWidget Виджет, которому принадлежит данная колонка
      */
     protected $listWidget = null;
+
+    /**
+     * @var \Closure Функция форматирования столбца 
+     */
+    protected $callbackFormat = null;
 
     /**
      * Создание нового экземпляра
@@ -194,6 +198,17 @@ class ListColumn
     }
 
     /**
+     * Назначает новую функцию форматирования
+     * @param \Closure
+     * @return self
+     */
+    public function setFormatValue(\Closure $callback)
+    {
+        $this->callbackFormat = $callback;
+        return $this;
+    }
+
+    /**
      * Возвращает исходное название столбца
      * @return string
      */
@@ -223,6 +238,18 @@ class ListColumn
     }
 
     /**
+     * Возвращает финальную версию значения столбца
+     * @param Modem $record
+     * @return string
+     */
+    public function getFormatColumnValue(Model $record)
+    {
+        return $this->callbackFormat !== null ? 
+            call_user_func($this->callbackFormat, $this->getColumnValue($record)) :
+            $this->getColumnValue($record);
+    }
+
+    /**
      * Возвращает значение столбца
      * @param Model $record
      * @param array $data
@@ -243,8 +270,8 @@ class ListColumn
 
     /**
      * Вызвается когда происходит создания запроса к базе
-     * @param Builder $query
+     * @param $query
      * @return void
      */
-    public function extendQuery(Builder $query) {}
+    public function extendQuery($query) {}
 }

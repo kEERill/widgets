@@ -9,7 +9,7 @@ class DummyClass extends FormWidget
     /** 
      * @var string $template Название шаблона формы 
      */
-    protected $template = 'widgets::forms.layouts.base';
+    protected $template = 'widgets::forms.layouts.default';
 
     /**
      * Validation Rules

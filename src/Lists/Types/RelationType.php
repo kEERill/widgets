@@ -2,7 +2,6 @@
 
 use Keerill\Widgets\Lists\ListColumn;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class RelationType extends ListColumn
 {
@@ -54,7 +53,7 @@ class RelationType extends ListColumn
     /**
      * @inheritdoc
      */
-    public function extendQuery(Builder $query)
+    public function extendQuery($query)
     {
         $query->with($this->getColumnName() . ':id,'. $this->getSelect());
     }

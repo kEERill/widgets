@@ -1,7 +1,6 @@
 <?php namespace Keerill\Widgets\Forms\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Keerill\Widgets\Exceptions\FormModelException;
 
 /**
@@ -104,7 +103,7 @@ trait ModelParent
     /**
      * @inheritdoc
      */
-    protected function extendFormModel(Builder $query)
+    protected function extendFormModel($query)
     {
         parent::extendFormModel($query);
 
@@ -120,9 +119,9 @@ trait ModelParent
     }
 
     /**
-     * @param Builder $query
+     * @param $query
      */
-    protected function traitExtendModelFormParent(Builder $query)
+    protected function traitExtendModelFormParent($query)
     {
         /**
          * Возвращает страницу 404, если родительская модель не найдена

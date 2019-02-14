@@ -3,7 +3,6 @@
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Widget as WidgetBase;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Validation\Validator;
 use Keerill\Widgets\Exceptions\FormFieldException;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
@@ -302,7 +301,7 @@ class FormWidget extends WidgetBase
         /**
          * Создаем конструктор запросов
          */
-        $query = $this->createFormModel()->where('id', $modelId);
+        $query = $this->createModel()->where('id', $modelId);
 
         /**
          * Это делаем для того, чтобы запрос по поиску модели можно было унаследовать
@@ -602,8 +601,8 @@ class FormWidget extends WidgetBase
     /**
      * Наследование запроса
      *
-     * @param Builder $query
+     * @param $query
      * @return void
      */
-    protected function extendModel(Builder $query) {}
+    protected function extendModel($query) {}
 }
