@@ -80,7 +80,7 @@ trait UpdateController
          */
         return view($this->updateView, [
             'formWidget' => $this->updateForm,
-            'formModel' => $this->updateForm->getFormModel()
+            'formModel' => $this->updateForm->getModel()
         ]);
     }
 
