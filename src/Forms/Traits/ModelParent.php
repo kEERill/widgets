@@ -66,7 +66,7 @@ trait ModelParent
      * @param Model $parentModel
      * @return void
      */
-    protected function setParentModelOption(Model $parentModel)
+    protected function setParentModel(Model $parentModel)
     {
         $this->parentModel = $parentModel;
     }
@@ -185,7 +185,7 @@ trait ModelParent
      */
     protected function traitInitConfig()
     {
-        $this->fillConfig([
+        $this->addConfigOptionsWithMethods([
             'parentModel'
         ]);
     }
