@@ -12,6 +12,20 @@ class DummyClass extends FormWidget
     protected $template = 'widgets::forms.layouts.default';
 
     /**
+     * @var string Возвращает название роута
+     */
+    protected $routeName = null;
+
+    /**
+     * Возвращает параметры для генерации ссылки роута
+     * @return array
+     */
+    protected function getUrlOptions()
+    {
+        return [];
+    }
+
+    /**
      * Validation Rules
      * @return array
      */

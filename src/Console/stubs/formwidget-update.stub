@@ -15,6 +15,20 @@ class DummyClass extends FormWidget
      * @var string Model class
      */
     protected $modelClass = \App\User::class;
+    
+    /**
+     * @var string Возвращает название роута
+     */
+    protected $routeName = null;
+
+    /**
+     * Возвращает параметры для генерации ссылки роута
+     * @return array
+     */
+    protected function getUrlOptions()
+    {
+        return [];
+    }
 
     /**
      * Validation Rules
