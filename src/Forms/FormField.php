@@ -1,5 +1,6 @@
 <?php namespace Keerill\Widgets\Forms;
 
+use Illuminate\Support\Arr;
 use Keerill\Widgets\Traits\Events;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Traits\UsableOptions;
@@ -150,7 +151,7 @@ class FormField
      */
     public function getGroupAttributes()
     {
-        $attributes = array_wrap(config('widgets.attributes.group'));
+        $attributes = Arr::wrap(config('widgets.attributes.group'));
 
         if (
             ($customAttributes = config("widgets.customAttributes.{$this->getType()}.group")) &&

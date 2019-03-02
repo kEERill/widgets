@@ -1,5 +1,7 @@
 <?php namespace Keerill\Widgets\Forms\Types\Helpers;
 
+use Illuminate\Support\Arr;
+
 trait Comment {
     /**
      * @var string Классы для описания поля
@@ -57,7 +59,7 @@ trait Comment {
      */
     public function getCommentAttributes()
     {
-        $cssClasses = array_wrap(config('widgets.attributes.comment'));
+        $cssClasses = Arr::wrap(config('widgets.attributes.comment'));
 
         if (
             ($customAttributes = config("widgets.customAttributes.{$this->getType()}.comment")) &&

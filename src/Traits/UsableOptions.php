@@ -1,5 +1,8 @@
 <?php namespace Keerill\Widgets\Traits;
 
+use Illuminate\Support\Arr;
+
+
 /**
  * Добавляет функции для работы с параметрами объекта
  * @author kEERilll
@@ -32,7 +35,7 @@ trait UsableOptions
      */
     public function getConfig()
     {
-        return array_wrap($this->config);
+        return Arr::wrap($this->config);
     }
     
     /**
@@ -41,7 +44,7 @@ trait UsableOptions
      */
     public function getConfigMethods()
     {
-        return array_wrap($this->configMethods);
+        return Arr::wrap($this->configMethods);
     }
 
     /**
@@ -52,7 +55,7 @@ trait UsableOptions
      */
     public function setOptions(array $options)
     {
-        $config = array_only($options, $this->getConfig());
+        $config = Arr::only($options, $this->getConfig());
 
         if (count($config) > 0) {
             foreach ($config as $key => $value) {
@@ -120,7 +123,7 @@ trait UsableOptions
      */
     public function removeConfigOptions(array $options)
     {
-        $config = array_only($options, $this->getConfig());
+        $config = Arr::only($options, $this->getConfig());
 
         foreach ($config as $option) {
             $this->removeConfigOption($option);
@@ -181,7 +184,7 @@ trait UsableOptions
     public function getReserveNames()
     {
         if ($this->configReserveNamesCache === null) {
-            $this->configReserveNamesCache = array_wrap($this->configReserveNames);
+            $this->configReserveNamesCache = Arr::wrap($this->configReserveNames);
 
             if (property_exists($this, 'reserveNames')) {
                 $this->configReserveNamesCache = array_merge(

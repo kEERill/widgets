@@ -4,6 +4,7 @@ use Keerill\Widgets\Forms\Types\Helpers\Label;
 use Keerill\Widgets\Forms\Types\Helpers\Value;
 use Keerill\Widgets\Forms\Types\Helpers\Comment;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
+use Illuminate\Support\Arr;
 
 
 class InputType extends \Keerill\Widgets\Forms\FormField implements ValueInterface
@@ -68,7 +69,7 @@ class InputType extends \Keerill\Widgets\Forms\FormField implements ValueInterfa
      */
     public function getInputAttributes()
     {
-        $attributes = array_wrap(config('widgets.attributes.input'));
+        $attributes = Arr::wrap(config('widgets.attributes.input'));
 
         if (
             ($customAttributes = config("widgets.customAttributes.{$this->getType()}.input")) &&

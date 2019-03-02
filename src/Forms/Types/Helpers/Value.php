@@ -1,5 +1,8 @@
 <?php namespace Keerill\Widgets\Forms\Types\Helpers;
 
+use Illuminate\Support\Arr;
+
+
 trait Value
 {
     /**
@@ -120,7 +123,7 @@ trait Value
      */
     public function getSaveData($data)
     {
-        array_set($data, $this->getName(), $this->getSaveValue());
+        Arr::set($data, $this->getName(), $this->getSaveValue());
         return $data;
     }
 
@@ -130,7 +133,7 @@ trait Value
      */
     public function getDataValue($data)
     {
-        array_set($data, $this->getName(), $this->getValue());
+        Arr::set($data, $this->getName(), $this->getValue());
         return $data;
     }
 

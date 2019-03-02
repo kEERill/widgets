@@ -6,6 +6,7 @@ use Keerill\Widgets\Widget as WidgetBase;
 use Illuminate\Contracts\Validation\Validator;
 use Keerill\Widgets\Exceptions\FormFieldException;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
+use Illuminate\Support\Arr;
 
 class FormWidget extends WidgetBase
 {
@@ -160,7 +161,7 @@ class FormWidget extends WidgetBase
         /**
          * Удаляем запрещенные атрибуты
          */
-        $attributes = array_except($attributes, $this->formAttributesReserved);
+        $attributes = Arr::except($attributes, $this->formAttributesReserved);
 
         return $attributes;
     }
@@ -574,7 +575,7 @@ class FormWidget extends WidgetBase
         }
 
         if ($this->arrayName) {
-            $data = array_get($data, $this->arrayName, []);
+            $data = Arr::get($data, $this->arrayName, []);
         }
 
         /**

@@ -5,6 +5,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 
 class ListWidget extends Widget
 {
@@ -121,7 +122,7 @@ class ListWidget extends Widget
      */
     public function getTableAttributes()
     {
-        return array_merge(config('widgets.attributes.table', []), array_wrap($this->tableAttributes));
+        return array_merge(config('widgets.attributes.table', []), Arr::wrap($this->tableAttributes));
     }
 
     /**

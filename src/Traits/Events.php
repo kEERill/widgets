@@ -1,5 +1,8 @@
 <?php namespace Keerill\Widgets\Traits;
 
+use Illuminate\Support\Arr;
+
+
 /**
  * Обработчик локальных событий
  */
@@ -51,7 +54,7 @@ trait Events
      */
     public function fireEvent($eventName, $params = [], $halt = false)
     {
-        $params = array_wrap($params);
+        $params = Arr::wrap($params);
         $result = [];
 
         if (isset($this->events[$eventName])) {

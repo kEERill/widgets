@@ -1,5 +1,7 @@
 <?php namespace Keerill\Widgets\Forms\Types\Helpers;
 
+use Illuminate\Support\Arr;
+
 trait Label {
     /**
      * @var string Классы для заголовка поля
@@ -57,7 +59,7 @@ trait Label {
      */
     public function getLabelAttributes()
     {
-        $attributes = array_wrap(config('widgets.attributes.label'));
+        $attributes = Arr::wrap(config('widgets.attributes.label'));
 
         if (
             ($customAttributes = config("widgets.customAttributes.{$this->getType()}.label")) &&
