@@ -260,9 +260,11 @@ class ListColumn
         $result = $record;
 
         foreach ($data as $attribute) {
-            if (isset($result->{$attribute})) {
+            if ($result && isset($result->{$attribute})) {
                 $result = $result->{$attribute};
+                continue;
             }
+            $result = null;
         }
 
         return $result;
