@@ -48,7 +48,7 @@ class FormWidget extends WidgetBase
     /**
      * @var Collection $formFields Поля данной формы
      */
-    protected $fields = null;
+    protected $fields = [];
     
     /** 
      * @var string $arrayName Все параметры будут начинаться на это название например: User[name]
