@@ -517,12 +517,14 @@ class FormWidget extends WidgetBase
      * Проверка полей формы
      * @return void
      */
-    public function validated()
+    public function validated(array $validationData = [])
     {
+        if (!$validationData) 
+            $validationData = $this->arrayName ? Arr::get(request()->all(), $this->arrayName, []) : request()->all();
+
         /**
          * Получаем данные для валидатора
          */
-        $validationData = $this->getSaveData();
         $validationRules = $this->getValidationRules();
         $validationNames = $this->getValidationNames();
         
@@ -570,13 +572,8 @@ class FormWidget extends WidgetBase
      */
     public function getSaveData($data = null)
     {
-        if ($data === null) {
-            $data = request()->all();
-        }
-
-        if ($this->arrayName) {
-            $data = Arr::get($data, $this->arrayName, []);
-        }
+        if (!$data)
+            $data = $this->arrayName ? Arr::get(request()->all(), $this->arrayName, []) : request()->all();
 
         /**
          * Задаем значения всем полям
