@@ -28,6 +28,23 @@ trait ThemeTrait
     }
 
     /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string
+     * @return string
+     */
+    public function setState(string $state)
+    {
+        return $this->state = $state;
+    }
+
+    /**
      * Возвращает название шаблона в зависимости от темы
      * @param string $template
      * @return mixed

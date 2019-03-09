@@ -64,6 +64,11 @@ class FormField
     protected $theme = null;
 
     /**
+     * @var string
+     */
+    protected $state = null;
+    
+    /**
      * Создание нового экземпляра
      *
      * @param View $view

@@ -93,6 +93,11 @@ class FormWidget extends WidgetBase
      * @var string
      */
     protected $errorBag = 'default';
+    
+    /**
+     * @var string
+     */
+    protected $state = null;
 
     /**
      * @inheritdoc

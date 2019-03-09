@@ -68,6 +68,11 @@ class ListWidget extends Widget
     protected $theme = null;
 
     /**
+     * @var string
+     */
+    protected $state = null;
+
+    /**
      * @inheritdoc
      */
     protected function boot(array $options)
