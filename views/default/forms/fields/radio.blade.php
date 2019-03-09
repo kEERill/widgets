@@ -6,7 +6,7 @@
             id="<?= $formField->getId('radio-' . $id) ?>" 
             name="<?= $formField->getNameToHtml() ?>" 
             class="form-check-input <?= $formField->getInputClass() ?>" 
-            <?= $formField->getValue() == $id ? 'checked' : '' ?>>
+            <?= old($formField->getName(), $formField->getValue()) == $id ? 'checked' : '' ?>>
         <label 
             class="form-check-label <?= $formField->getLabelClass() ?>" 
             for="<?= $formField->getId('radio-' . $id) ?>">

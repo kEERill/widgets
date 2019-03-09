@@ -3,6 +3,6 @@
     id="<?= $formField->getId() ?>"
     name="<?= $formField->getNameToHtml() ?>" 
     class="form-control <?= $formField->getInputClass() ?>"
-    value="<?= $formField->getValue() ?: old($formField->getName()) ?>"
+    value="<?= old($formField->getName(), $formField->getValue()) ?>"
     <?= $formField->getDisabled() ? 'disabled' : '' ?>
 >
