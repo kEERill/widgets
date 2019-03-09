@@ -1,5 +1,5 @@
 <div
-    class="form-group row <?= $formField->getGroupClass() ?>">
+    class="form-group <?= $formField->getState() == 'horizontal' ? 'row' : '' ?> <?= $formField->getGroupClass() ?>">
 
     @if ($formField->getLabel())
         <label 

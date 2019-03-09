@@ -43,4 +43,14 @@ class SelectType extends InputType
         $this->selectOptions = $options;
         return $this;
     }
+
+    /**
+     * Возвращает true если элемент key выбран
+     * @param mixed $key
+     * @return bool
+     */
+    public function isSelect($key)
+    {
+        return $key == request()->old($this->getName(), $this->getValue());
+    }
 }

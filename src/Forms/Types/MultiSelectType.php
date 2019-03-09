@@ -36,4 +36,16 @@ class MultiSelectType extends SelectType
         return $baseClasses;
     }
 
+    /**
+     * Возвращает true если элемент key выбран
+     * @param mixed $key
+     * @return bool
+     */
+    public function isSelect($key)
+    {
+        if (is_array($value = request()->old($this->getName(), $this->getValue())))
+            return in_array($key, $value);
+
+        return false;
+    }
 }

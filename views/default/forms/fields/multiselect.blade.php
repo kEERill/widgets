@@ -8,7 +8,7 @@
     @foreach ($formField->getSelectOptions() as $key => $value)
         <option 
             value="<?= $key ?>" 
-            <?= in_array($key, old($formField->getName(), $formField->getValue())) ? 'selected' : '' ?>
+            <?= $formField->isSelect($key) ? 'selected' : '' ?>
         ><?= $value ?></option>
     @endforeach
 </select>

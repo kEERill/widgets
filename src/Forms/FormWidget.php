@@ -503,6 +503,9 @@ class FormWidget extends WidgetBase
         if ($this->getTheme())
             $formField->setTheme($this->getTheme());
 
+        if ($this->getState())
+            $formField->setState($this->getState());
+
         return $formField;
     }
 
@@ -626,7 +629,7 @@ class FormWidget extends WidgetBase
         if (count($this->fields) > 0) {
             foreach ($this->fields as $field) {
                 if ($field instanceof ValueInterface) {
-                    if ($field->getSaveValue() != FormField::NOT_SAVE_DATA) {
+                    if ($field->getSaveValue() !== FormField::NOT_SAVE_DATA) {
                         $result = $field->getSaveData($result);
                     }
                 }
