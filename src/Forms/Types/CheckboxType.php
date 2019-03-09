@@ -5,5 +5,10 @@ class CheckboxType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.checkbox';
+    protected $template = 'forms.fields.checkbox';
+
+    /**
+     * @var string $template Название шаблона для данного поля
+     */
+    protected $templateField = 'forms.empty';
 }

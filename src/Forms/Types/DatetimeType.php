@@ -7,7 +7,7 @@ class DatetimeType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.datetime';
+    protected $template = 'forms.fields.datetime';
 
     /**
      * @inheritdoc

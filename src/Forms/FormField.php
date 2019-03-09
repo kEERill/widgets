@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Arr;
 use Keerill\Widgets\Traits\Events;
+use Keerill\Widgets\Traits\ThemeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Traits\UsableOptions;
 use Illuminate\Contracts\View\Factory as View;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class FormField
 {
-    use UsableOptions, Events;
+    use UsableOptions, Events, ThemeTrait;
 
     /**
      * Поле, возвращает данную константу, если поле не предусматривает сохранение поля
@@ -30,7 +31,12 @@ class FormField
     /**
      * @var string $template Название шаблона для данного поля
      */
-    protected $template = 'forms::fields.input';
+    protected $template = 'forms.fields.input';
+
+    /**
+     * @var string $templateField Название шаблона, в который вставляется поле
+     */
+    protected $templateField = 'forms.field';
 
     /** 
      * @var View $view Шаблонизатор
@@ -53,6 +59,11 @@ class FormField
     protected $form = null;
 
     /**
+     * @var string Название темы
+     */
+    protected $theme = null;
+
+    /**
      * Создание нового экземпляра
      *
      * @param View $view
@@ -68,6 +79,27 @@ class FormField
         $this->type = $type;
 
         $this->init();
+    }
+
+    /**
+     * Возвращает ID поля в HTML
+     * @param string $suffix
+     * @return string
+     */
+    public function getId(string $suffix = null)
+    {
+        $id = 'formField-' . class_basename($this->form);
+
+        if ($this->type) 
+            $id .= '-' . $this->type;
+
+        if ($this->name) 
+            $id .= '-' . $this->name;
+
+        if ($suffix !== null)
+            $id .= '-' . $suffix;
+
+        return $id;
     }
 
     /**
@@ -118,6 +150,46 @@ class FormField
     }
 
     /**
+     * Возвращает название шаблона
+     * @param string $template
+     * @return Widget
+     */
+    public function setTemplate(string $template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * Возвращает назнание шаблона
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->getTemplateName($this->template);
+    }
+
+    /**
+     * Возвращает название шаблона
+     * @param string $templateField
+     * @return Widget
+     */
+    public function setTemplateField(string $templateField)
+    {
+        $this->templateField = $templateField;
+        return $this;
+    }
+
+    /**
+     * Возвращает назнание шаблона
+     * @return string
+     */
+    public function getTemplateField()
+    {
+        return $this->getTemplateName($this->templateField);
+    }
+
+    /**
      * Инифиализация поля
      *
      * @return void
@@ -133,9 +205,9 @@ class FormField
     {
         $this->prepareRender();
 
-        return $this->view->make($this->template)->with([
-            'formField' => $this
-        ])->render();
+        return $this->view->make($this->getTemplateField())->with([
+                'formField' => $this
+            ])->render();
     }
 
     /**
@@ -143,29 +215,6 @@ class FormField
      * @return void
      */
     protected function prepareRender() {}
-
-
-    /**
-     * Возвращает атрибуты для div блока
-     * @return array
-     */
-    public function getGroupAttributes()
-    {
-        $attributes = Arr::wrap(config('widgets.attributes.group'));
-
-        if (
-            ($customAttributes = config("widgets.customAttributes.{$this->getType()}.group")) &&
-            is_array($customAttributes)
-        ) {
-            $attributes = array_merge($attributes, $customAttributes);
-        }
-
-        if ($this->getGroupClass() !== null) {
-            $attributes['class'][] = $this->getGroupClass();
-        }
-
-        return $attributes;
-    }
 
     /**
      * @return string
@@ -205,7 +254,7 @@ class FormField
     protected function initConfig()
     {
         $this->addConfigOptionsWithMethods([
-            'groupClass', 'default'
+            'groupClass', 'default', 'template', 'templateField'
         ]);
     }
 }

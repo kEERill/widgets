@@ -52,26 +52,4 @@ trait Comment {
         $this->commentClass = $commentClass;
         return $this;
     }
-
-     /**
-     * Возвращает атрибуты для комментария поля
-     * @return array
-     */
-    public function getCommentAttributes()
-    {
-        $cssClasses = Arr::wrap(config('widgets.attributes.comment'));
-
-        if (
-            ($customAttributes = config("widgets.customAttributes.{$this->getType()}.comment")) &&
-            is_array($customAttributes)
-        ) {
-            $cssClasses = array_merge($cssClasses, $customAttributes);
-        }
-
-        if ($this->getCommentClass() !== null) {
-            $cssClasses['class'][] = $this->getCommentClass();
-        }
-
-        return $cssClasses;
-    }
 }

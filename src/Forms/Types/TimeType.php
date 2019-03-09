@@ -7,7 +7,7 @@ class TimeType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.input';
+    protected $template = 'forms.fields.input';
 
     /**
      * @inheritdoc

@@ -20,7 +20,12 @@ class AlertType extends \Keerill\Widgets\Forms\FormField
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.alert';
+    protected $template = 'forms.fields.alert';
+
+    /**
+     * @var string $template Название шаблона для данного поля
+     */
+    protected $templateField = 'forms.empty';
 
     /**
      * Изменяет тип сообщения

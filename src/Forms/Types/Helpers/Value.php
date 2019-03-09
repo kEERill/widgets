@@ -2,47 +2,14 @@
 
 use Illuminate\Support\Arr;
 
-
 trait Value
 {
+    use DefaultValue, Disabled;
+
     /**
      * @var string $value Значение поля
      */
     protected $value = null;
-
-    /**
-     * @var mixed
-     */
-    protected $default = null;
-
-    /**
-     * Название полей для валидации
-     * @return array
-     */
-    public function getValidationName()
-    {
-        return [$this->getName() => $this->getName()];
-    }
-
-    /**
-     * Возвращает стандартное значение поля
-     * @return string
-     */
-    public function getDefault()
-    {
-        return $this->default;
-    }
-
-    /**
-     * Задает стандартное значение поля
-     * @param string Значение поля
-     * @return self
-     */
-    public function setDefault($value)
-    {
-        $this->default = $value;
-        return $this;
-    }
 
     /**
      * Возвращает новое значение поля, по полученным данным
@@ -153,7 +120,7 @@ trait Value
      */
     public function getValue()
     {
-        return $this->value ?: $this->getDefault();
+        return ($this->getDisabled()) ? null : $this->value ?: $this->getDefault();
     }
 
     /**

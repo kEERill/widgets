@@ -1,4 +1,6 @@
-<?php namespace Keerill\Widgets\Forms\Types\Interfaces;
+<?php 
+
+namespace Keerill\Widgets\Forms\Types\Interfaces;
 
 interface Value 
 {
@@ -15,6 +17,4 @@ interface Value
 
     public function getSaveValue();
     public function getSaveData($data);
-
-    public function getValidationName();
 }

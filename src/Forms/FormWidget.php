@@ -1,15 +1,19 @@
 <?php namespace Keerill\Widgets\Forms;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Keerill\Widgets\Traits\ThemeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Widget as WidgetBase;
 use Illuminate\Contracts\Validation\Validator;
 use Keerill\Widgets\Exceptions\FormFieldException;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
-use Illuminate\Support\Arr;
+use Keerill\Widgets\Forms\Types\Interfaces\Validation as ValidationInterface;
 
 class FormWidget extends WidgetBase
 {
+    use ThemeTrait;
+    
     /**
      * @var string Метод формы [POST, GET, PUT, DELETE]
      */
@@ -33,7 +37,7 @@ class FormWidget extends WidgetBase
     /** 
      * @var string $template Название шаблона формы 
      */
-    protected $template = 'widgets::forms.layouts.default';
+    protected $template = 'forms.layouts.default';
 
     /**
      * @var Model Модель формы
@@ -61,14 +65,14 @@ class FormWidget extends WidgetBase
     protected $validationMessages = [];
 
     /**
+     * @var string Название используемой темы, null - тема по умолчанию
+     */
+    protected $theme = null;
+
+    /**
      * @var boolean Использование отправки файлов в форме
      */
     protected $useFiles = false;
-
-    /**
-     * @var array $availableFiledTypes Массив доступных типов полей
-     */
-    protected $availableFieldTypes = null;
 
     /**
      * @var array Атрибуты формы
@@ -79,6 +83,16 @@ class FormWidget extends WidgetBase
      * @var array
      */
     private $formAttributesReserved = ['method', 'url', 'files', 'action', 'method'];
+
+    /**
+     * @var string
+     */
+    protected $alias = 'formWidget';
+
+    /**
+     * @var string
+     */
+    protected $errorBag = 'default';
 
     /**
      * @inheritdoc
@@ -112,6 +126,22 @@ class FormWidget extends WidgetBase
     }
 
     /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->getTemplateName($this->template);
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorBag()
+    {
+        return $this->errorBag;
+    }
+
+    /**
      * Возвращает классы для основного контейнера
      * @return string
      */
@@ -132,27 +162,14 @@ class FormWidget extends WidgetBase
     }
 
     /**
-     * Возвращает атрибуты для контейнера формы
-     * @return array
-     */
-    public function getWrapperAttributes()
-    {
-        $attributes = config('widgets.attributes.formWrapper', []);
-
-        if ($this->getWrapperClass() !== null) {
-            $attributes['class'][] = $this->getWrapperClass();
-        }
-
-        return $attributes;
-    }
-
-    /**
      * Возвращает атрибуты для тэга FORM "<form attributes>"
      * @return array
      */
     public function getFormAttributes()
     {
-        $attributes = config('widgets.attributes.form', []);
+        $attributes = [
+            'id' => $this->getId()
+        ];
 
         if (is_array($this->formAttributes) && count($this->formAttributes) > 0) {
             $attributes = array_merge($attributes, $this->formAttributes);
@@ -244,14 +261,13 @@ class FormWidget extends WidgetBase
 
     /**
      * Возвращает массив названий полей
-     *
      * @return array
      */
     public function getValidationNames()
     {
         if (count($this->fields) > 0) {
             return $this->fields->mapWithKeys(function (FormField $field) {
-                return $field instanceof ValueInterface ? $field->getValidationName() : [];
+                return $field instanceof ValidationInterface ? $field->getValidationName() : [];
             })->toArray();
         }
 
@@ -259,6 +275,32 @@ class FormWidget extends WidgetBase
          * Если вдруг в форме нет полей, то возвращаем пустой массив, логично же?
          */
         return [];
+    }
+
+    /**
+     * Возвращает массив сообщений полей
+     * @return array
+     */
+    public function getValidationMessages()
+    {
+        $validationMessages = [];
+
+        /**
+         * Теперь берем сообщения об ошибках для валидатора из полей
+         */
+        if (count($this->fields) > 0) {
+            $validationMessages = $this->fields->mapWithKeys(function (FormField $field) {
+                return $field instanceof ValidationInterface ? $field->getValidationMessages() : [];
+            })->toArray();
+        }
+
+        if ($this->validationMessages)
+            $validationMessages = array_merge($validationMessages, $this->validationMessages);
+
+        /**
+         * Если вдруг в форме нет полей, то возвращаем пустой массив, логично же?
+         */
+        return $validationMessages;
     }
 
     /**
@@ -393,19 +435,6 @@ class FormWidget extends WidgetBase
     protected function afterValidation(Validator $validator) {}
 
     /**
-     * Возвращает массив доступных типов полей
-     * @return array
-     */
-    public function getAvailableFieldTypes()
-    {
-        if ($this->availableFieldTypes === null) {
-            return $this->availableFieldTypes = config('widgets.fieldTypes', []);
-        }
-
-        return $this->availableFieldTypes;
-    }
-
-    /**
      * Добавляет к форме новое поле, по его типу
      *
      * @param string $fieldName Название поля
@@ -419,7 +448,7 @@ class FormWidget extends WidgetBase
         /**
          * Получаем все типы полей
          */
-        $availableFieldTypes = $this->getAvailableFieldTypes();
+        $availableFieldTypes = config('widgets.fieldTypes', []);
 
         /**
          * Делаем проверку, что данный тип поля существует в системе
@@ -450,9 +479,8 @@ class FormWidget extends WidgetBase
         /**
          * Добавляем данное поле в массив полей данной формы
          */
-        if ($this->fields == null) {
+        if ($this->fields == null)
             $this->fields = collect([]);
-        }
 
         $this->fields->put($fieldName, $formField);
 
@@ -460,9 +488,15 @@ class FormWidget extends WidgetBase
          * Если у формы есть начальное название полей, то
          * добавляем его к каждому полю, т.е. name => User[name]
          */
-        if ($this->arrayName) {
+        if ($this->arrayName)
             $formField->arrayName = $this->arrayName;
-        }
+
+        /**
+         * Если у виджета есть установленная тема, то данную тему распостраняем
+         * на поля виджета
+         */
+        if ($this->getTheme())
+            $formField->setTheme($this->getTheme());
 
         return $formField;
     }
@@ -527,12 +561,13 @@ class FormWidget extends WidgetBase
          */
         $validationRules = $this->getValidationRules();
         $validationNames = $this->getValidationNames();
+        $validationMessages = $this->getValidationMessages();
         
         /**
          * Создаём экземпляр валидатора для проведения валидации полей
          * В валидатор передём данные формы, правила валидации, спец сообщения и название полей
          */
-        $validator = validator($validationData, $validationRules, $this->validationMessages, $validationNames);
+        $validator = validator($validationData, $validationRules, $validationMessages, $validationNames);
 
         $this->beforeValidation($validator);
 

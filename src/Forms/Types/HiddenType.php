@@ -11,7 +11,7 @@ class HiddenType extends \Keerill\Widgets\Forms\FormField implements ValueInterf
     /**
      * @var string $template Название шаблона для данного поля
      */
-    protected $template = 'widgets::forms.fields.hidden';
+    protected $template = 'forms.fields.hidden';
 
     /**
      * @inheritdoc

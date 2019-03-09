@@ -5,5 +5,5 @@ class TextareaType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.textarea';
+    protected $template = 'forms.fields.textarea';
 }

@@ -10,7 +10,7 @@ class SelectType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.select';
+    protected $template = 'forms.fields.select';
 
     /**
      * @inheritdoc

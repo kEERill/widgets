@@ -1,0 +1,1 @@
+<input type="<?= $formField->getNameToHtml() ?>" value="<?= $formField->getValue() ?>">

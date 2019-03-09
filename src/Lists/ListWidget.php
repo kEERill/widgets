@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Keerill\Widgets\Traits\ThemeTrait;
 
 class ListWidget extends Widget
 {
+    use ThemeTrait;
+
     /**
      * @var Collection $allColumns Коллекция столбцов
      */
@@ -30,9 +33,9 @@ class ListWidget extends Widget
     protected $usePagination = true;
 
     /**
-     * @var array $tableAttributes Атрибуты таблицы
+     * @var string $tableClass Стили таблицы
      */
-    protected $tableAttributes = [];
+    protected $tableClass = null;
 
     /**
      * @var Model $modelClass Класс модели, которые будем выводить в таблице
@@ -42,7 +45,7 @@ class ListWidget extends Widget
     /** 
      * @var string $template Название шаблона таблицы 
      */
-    protected $template = 'widgets::lists.layouts.default';
+    protected $template = 'lists.layouts.default';
 
     /**
      * @var string $defaultType Стандартное название типа колонки
@@ -50,14 +53,19 @@ class ListWidget extends Widget
     protected $defaultType = 'default';
 
     /**
-     * @var array $availableColumnTypes Массив доступных типов столбцов
-     */
-    protected $availableColumnTypes = null;
-
-    /**
      * @var string $defaultSort Стандартная сортировка
      */
     protected $defaultSort = 'created_at desc';
+
+    /**
+     * @var string
+     */
+    protected $alias = 'listWidget';
+
+    /**
+     * @var string Название используемой темы, null - тема по умолчанию
+     */
+    protected $theme = null;
 
     /**
      * @inheritdoc
@@ -78,22 +86,16 @@ class ListWidget extends Widget
     protected function initConfig()
     {
         $this->addConfigOptions([
-                'recordsToPage', 'usePagination', 'defaultSort'
+                'recordsToPage', 'usePagination', 'defaultSort', 'tableClass'
             ]);
     }
 
     /**
-     * Возвращает массив доступных типов столбцов
-     *
-     * @return array
+     * @return string
      */
-    public function getAvailableColumnTypes()
+    public function getTemplate()
     {
-        if ($this->availableColumnTypes === null) {
-            return $this->availableColumnTypes = config('widgets.columnTypes', []);
-        }
-
-        return $this->availableColumnTypes;
+        return $this->getTemplateName($this->template);
     }
 
     /**
@@ -104,25 +106,36 @@ class ListWidget extends Widget
      */
     public function getColumnTypeClass(string $columnType)
     {
+        $availableColumnTypes = config('widgets.columnTypes', []);
         /**
          * Делаем проверку, что данный тип поля существует в системе
          */
-        if (!in_array($columnType, array_keys($this->getAvailableColumnTypes()))) {
+        if (!in_array($columnType, array_keys($availableColumnTypes))) {
             throw new ListException(
                 sprintf('Тип столбца [%s] не существует', $columnType)
             );
         }
 
-        return $this->availableColumnTypes[$columnType];
+        return $availableColumnTypes[$columnType];
     }
 
     /**
-     * Возвращает атрибуты для таблицы
+     * Возвращает стили для таблицы
      * @return array
      */
-    public function getTableAttributes()
+    public function getTableClass()
     {
-        return array_merge(config('widgets.attributes.table', []), Arr::wrap($this->tableAttributes));
+        return $this->tableClass;
+    }
+
+   /**
+     * @param string $tableClass
+     * @return self
+     */
+    public function setTableClass(string $tableClass)
+    {
+        $this->tableClass = $tableClass;
+        return $this;
     }
 
     /**

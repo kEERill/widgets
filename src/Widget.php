@@ -2,12 +2,12 @@
 
 use Keerill\Widgets\Traits\Events;
 use Illuminate\View\Factory as View;
+use Keerill\Widgets\Traits\HtmlTrait;
 use Keerill\Widgets\Traits\UsableOptions;
-use Keerill\Widgets\Exceptions\WidgetException;
 
 class Widget
 {
-    use UsableOptions, Events;
+    use UsableOptions, Events, HtmlTrait;
 
     /**
      * @var array $addedJs Подключенные JS скрипты данной формы
@@ -28,6 +28,11 @@ class Widget
      * @var string $template Название шаблона формы 
      */
     protected $template = 'widgets::layouts.base';
+
+    /**
+     * @var string Уникальное имя виджета
+     */
+    protected $alias = null;
 
     /**
      * Создание нового экземпляра
@@ -189,7 +194,7 @@ class Widget
         /**
          * Начинаем рендер формы
          */
-        return $this->view->make($this->template)->with($options);
+        return $this->view->make($this->getTemplate())->with($options);
     }
 
     /**

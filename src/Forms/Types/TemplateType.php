@@ -11,15 +11,16 @@ class TemplateType extends \Keerill\Widgets\Forms\FormField
     protected $template = null;
 
     /**
+     * @var string $template Название шаблона для данного поля
+     */
+    protected $templateField = 'forms.empty';
+
+    /**
      * @inheritdoc
      */
-    protected function initConfig()
+    public function getTemplate()
     {
-        parent::initConfig();
-
-        $this->addConfigOptionsWithMethods([
-            'template'
-        ]);
+        return $this->template;
     }
 
     /**

@@ -1,7 +1,11 @@
 <?php namespace Keerill\Widgets\Forms\Types;
 
+use Keerill\Widgets\Forms\Types\Helpers\Disabled;
+
 class ButtonType extends \Keerill\Widgets\Forms\FormField
 {
+    use Disabled;
+
     /**
      * @var string Текст кнопки
      */
@@ -10,12 +14,18 @@ class ButtonType extends \Keerill\Widgets\Forms\FormField
     /**
      * @var string Классы для кнопки
      */
-    protected $cssClasses = null;
+    protected $buttonClass = null;
 
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.button';
+    protected $template = 'forms.fields.button';
+
+    /**
+     * @var string $template Название шаблона для данного поля
+     */
+    protected $templateField = 'forms.empty';
+
 
     /**
      * Изменяет текст кнопки
@@ -39,10 +49,11 @@ class ButtonType extends \Keerill\Widgets\Forms\FormField
 
     /**
      * Изменяет css классы кнопки
+     * @param string
      */
-    public function setCssClasses(string $cssClasses)
+    public function setButtonClass(string $buttonClass)
     {
-        $this->cssClasses = $cssClasses;
+        $this->buttonClass = $buttonClass;
         return $this;
     }
 
@@ -50,24 +61,9 @@ class ButtonType extends \Keerill\Widgets\Forms\FormField
      * Возвращает стили для кнопки
      * @return string
      */
-    public function getCssClasses()
+    public function getButtonClass()
     {
-        return $this->cssClasses;
-    }
-
-    /**
-     * Возвращает атрибуты для кнопки
-     * @return array
-     */
-    public function getButtonAttributes()
-    {
-        $cssClasses = config('widgets.customAttributes.button.input', []);
-
-        if ($this->getCssClasses() !== null) {
-            $cssClasses['class'][] = $this->getCssClasses();
-        }
-
-        return $cssClasses;
+        return $this->buttonClass;
     }
 
     /**
@@ -78,7 +74,7 @@ class ButtonType extends \Keerill\Widgets\Forms\FormField
         parent::initConfig();
 
         $this->addConfigOptionsWithMethods([
-            'text', 'cssClasses'
+            'text', 'buttonClass', 'disabled'
         ]);
     }
 }

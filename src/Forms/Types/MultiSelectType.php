@@ -10,7 +10,7 @@ class MultiSelectType extends SelectType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.multiselect';
+    protected $template = 'forms.fields.multiselect';
 
     /**
      * @inheritdoc

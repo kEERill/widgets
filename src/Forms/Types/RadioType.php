@@ -7,12 +7,17 @@ class RadioType extends InputType
     /**
      * @var array Возможные варианты для кнопок
      */
-    protected $selectOptions = [];
+    protected $radioOptions = [];
     
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.radio';
+    protected $template = 'forms.fields.radio';
+
+    /**
+     * @var string $template Название шаблона для данного поля
+     */
+    protected $templateField = 'forms.field';
 
     /**
      * @inheritdoc
@@ -22,7 +27,7 @@ class RadioType extends InputType
         parent::initConfig();
         
         $this->addConfigOptionsWithMethods([
-            'selectOptions'
+            'radioOptions'
         ]);
     }
 
@@ -30,9 +35,9 @@ class RadioType extends InputType
      * Возвращает список возможных вариантов для выбора
      * @return array
      */
-    public function getSelectOptions()
+    public function getRadioOptions()
     {
-        return $this->selectOptions;
+        return $this->radioOptions;
     }
 
 
@@ -41,9 +46,9 @@ class RadioType extends InputType
      * @param array
      * @return self
      */
-    public function setSelectOptions(array $options)
+    public function setRadioOptions(array $options)
     {
-        $this->selectOptions = $options;
+        $this->radioOptions = $options;
         return $this;
     }
 }

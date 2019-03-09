@@ -52,26 +52,4 @@ trait Label {
         $this->labelClass = $labelClass;
         return $this;
     }
-
-    /**
-     * Возвращает атрибуты для Заголовка поля
-     * @return array
-     */
-    public function getLabelAttributes()
-    {
-        $attributes = Arr::wrap(config('widgets.attributes.label'));
-
-        if (
-            ($customAttributes = config("widgets.customAttributes.{$this->getType()}.label")) &&
-            is_array($customAttributes)
-        ) {
-            $attributes = array_merge($attributes, $customAttributes);
-        }
-
-        if ($this->getLabelClass() !== null) {
-            $attributes['class'][] = $this->getLabelClass();
-        }
-
-        return $attributes;
-    }
 }

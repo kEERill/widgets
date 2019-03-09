@@ -8,7 +8,7 @@ class PasswordType extends InputType
     /**
      * @inheritdoc
      */
-    protected $template = 'widgets::forms.fields.password';
+    protected $template = 'forms.fields.password';
 
     /**
      * @inheritdoc
