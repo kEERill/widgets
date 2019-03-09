@@ -1,5 +1,5 @@
 <select 
-    name="<?= $formField->getNameToHtml() ?>" 
+    name="<?= $formField->getId() ?>" 
     id="<?= $formField->getNameToHtml() ?>" 
     class="form-control <?= $formField->getInputClass() ?>"
     <?= $formField->getDisabled() ? 'disabled' : '' ?>
