@@ -1,13 +1,13 @@
 <?php namespace Keerill\Widgets;
 
+use Keerill\Widgets\Traits\Html;
 use Keerill\Widgets\Traits\Events;
+use Keerill\Widgets\Traits\Options;
 use Illuminate\View\Factory as View;
-use Keerill\Widgets\Traits\HtmlTrait;
-use Keerill\Widgets\Traits\UsableOptions;
 
 class Widget
 {
-    use UsableOptions, Events, HtmlTrait;
+    use Options, Events, Html;
 
     /**
      * @var array $addedJs Подключенные JS скрипты данной формы

@@ -24,10 +24,30 @@ class DateTimeType extends ListColumn
     }
 
     /**
+     * Возвращает формат дат в данном столбце
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * Задает новый формат столбцу
+     * @param string $format
+     * @return self
+     */
+    public function setFormat(string $format)
+    {
+        $this->format = $format;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     protected function getColumnValueByData(Model $record, array $data)
     {
-        return Carbon::parse(parent::getColumnValueByData($record, $data))->formatLocalized($this->format);
+        return Carbon::parse(parent::getColumnValueByData($record, $data))->formatLocalized($this->getFormat());
     }
 }

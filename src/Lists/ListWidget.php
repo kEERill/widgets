@@ -1,16 +1,15 @@
 <?php namespace Keerill\Widgets\Lists;
 
 use Keerill\Widgets\Widget;
+use Keerill\Widgets\Traits\Theme;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
-use Keerill\Widgets\Traits\ThemeTrait;
 
 class ListWidget extends Widget
 {
-    use ThemeTrait;
+    use Theme;
 
     /**
      * @var Collection $allColumns Коллекция столбцов

@@ -26,7 +26,7 @@ class RadioType extends InputType
     {
         parent::initConfig();
         
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'radioOptions'
         ]);
     }

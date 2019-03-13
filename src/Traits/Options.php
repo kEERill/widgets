@@ -2,22 +2,16 @@
 
 use Illuminate\Support\Arr;
 
-
 /**
  * Добавляет функции для работы с параметрами объекта
  * @author kEERilll
  */
-trait UsableOptions
+trait Options
 {
     /**
      * @var array $config Массив параметров, которые можно являются параметрами виджета
      */
     protected $config = [];
-
-    /**
-     * @var array $configMethods Массив параметров, у которых доступно заполнение параметра через функцию
-     */
-    protected $configMethods = [];
 
     /**
      * @var array $reserveNames Название параметров, которые нельзя добавлять
@@ -59,7 +53,7 @@ trait UsableOptions
 
         if (count($config) > 0) {
             foreach ($config as $key => $value) {
-                if (in_array($key, $this->configMethods) && method_exists($this, 'set' . studly_case($key))) {
+                if (method_exists($this, 'set' . studly_case($key))) {
                     call_user_func([$this, 'set' . studly_case($key)], $value);
                     continue;
                 }
@@ -69,20 +63,6 @@ trait UsableOptions
         }
 
         return $this;
-    }
-
-    /**
-     * Добавляет новые параметры с возможностью заполнения через функцию
-     * @param array
-     * @return void
-     */
-    public function addConfigOptionsWithMethods(array $options) 
-    {
-        foreach ($options as $option) {
-            if ($this->addConfigOption($option)) {
-                $this->addConfigMethod($option);
-            }
-        }
     }
     
     /**
@@ -142,37 +122,6 @@ trait UsableOptions
                 unset($this->config[$key]);
             }
         }
-    }
-
-    /**
-     * Добавляет возможность заполнение параметра методом функции
-     * @param array
-     * @return void
-     */
-    public function addConfigMethods(array $options)
-    {
-        foreach ($options as $option) {
-            $this->addConfigMethod($option);
-        }
-    }
-
-    /**
-     * Добавляет возможность заполнение параметра методом функции
-     * @param string
-     * @return void
-     */
-    public function addConfigMethod(string $option)
-    {
-        if (
-            in_array($option, $this->getReserveNames()) || 
-            !in_array($option, $this->getConfig()) ||
-            in_array($option, $this->getConfigMethods())
-        ) {
-            return false;
-        }
-
-        $this->configMethods[] = $option;
-        return true;
     }
 
     /**

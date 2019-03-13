@@ -5,7 +5,7 @@ namespace Keerill\Widgets\Traits;
 /**
  * Работа с HTML
  */
-trait HtmlTrait
+trait Html
 {
     /**
      * Возвращает ID виджета в HTML

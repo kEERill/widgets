@@ -94,7 +94,7 @@ class AlertType extends \Keerill\Widgets\Forms\FormField
     {
         parent::initConfig();
 
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'alertType', 'title', 'message'
         ]);
     }

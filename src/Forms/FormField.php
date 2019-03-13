@@ -1,16 +1,16 @@
 <?php namespace Keerill\Widgets\Forms;
 
 use Illuminate\Support\Arr;
+use Keerill\Widgets\Traits\Theme;
 use Keerill\Widgets\Traits\Events;
-use Keerill\Widgets\Traits\ThemeTrait;
+use Keerill\Widgets\Traits\Options;
 use Illuminate\Database\Eloquent\Model;
-use Keerill\Widgets\Traits\UsableOptions;
 use Illuminate\Contracts\View\Factory as View;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class FormField
 {
-    use UsableOptions, Events, ThemeTrait;
+    use Options, Events, Theme;
 
     /**
      * Поле, возвращает данную константу, если поле не предусматривает сохранение поля
@@ -258,7 +258,7 @@ class FormField
      */
     protected function initConfig()
     {
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'groupClass', 'default', 'template', 'templateField'
         ]);
     }

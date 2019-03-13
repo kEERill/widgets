@@ -19,7 +19,7 @@ class SelectType extends InputType
     {
         parent::initConfig();
         
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'selectOptions'
         ]);
     }

@@ -18,7 +18,7 @@ class HiddenType extends \Keerill\Widgets\Forms\FormField implements ValueInterf
      */
     public function boot()
     {
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'value', 'default'
         ]);
     }

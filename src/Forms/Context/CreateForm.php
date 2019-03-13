@@ -59,16 +59,16 @@ class CreateForm extends FormWidget
     /**
      * Наследуем создаваемую модель, чтобы при создании модели уже была связь с родительской моделью
      *
-     * @param Model $formModel
+     * @param Model $model
      * @param array $saveData
      * @return void
      */
-    protected function extendBeforeFormModel(Model $formModel, array &$saveData) {}
+    protected function extendBeforeFormModel(Model $model, array &$saveData) {}
 
     /**
      * Наследуем уже созданую модель
-     * @param Model $formModel
+     * @param Model $model
      * @return void
      */
-    protected function extendAfterFormModel(Model $formModel) {} 
+    protected function extendAfterFormModel(Model $model) {} 
 }

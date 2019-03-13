@@ -73,7 +73,7 @@ class ButtonType extends \Keerill\Widgets\Forms\FormField
     {
         parent::initConfig();
 
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'text', 'buttonClass', 'disabled'
         ]);
     }

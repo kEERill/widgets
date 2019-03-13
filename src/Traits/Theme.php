@@ -5,8 +5,17 @@ namespace Keerill\Widgets\Traits;
 /**
  * Управление темой
  */
-trait ThemeTrait
+trait Theme
 {
+    /**
+     * Возвращает текущую тему
+     * @return string
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
     /**
      * Назначает новую тему
      * @param string $theme
@@ -19,15 +28,6 @@ trait ThemeTrait
     }
 
     /**
-     * Возвращает текущую тему
-     * @return string
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
      * @return string
      */
     public function getState()
@@ -37,11 +37,12 @@ trait ThemeTrait
 
     /**
      * @param string
-     * @return string
+     * @return self
      */
     public function setState(string $state)
     {
-        return $this->state = $state;
+       $this->state = $state;
+       return $this;
     }
 
     /**

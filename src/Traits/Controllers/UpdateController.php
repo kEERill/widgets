@@ -1,7 +1,8 @@
-<?php namespace Keerill\Widgets\Forms\Traits;
+<?php namespace Keerill\Widgets\Traits\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Forms\Context\UpdateForm;
+use Keerill\Widgets\Exceptions\WidgetException;
 
 /**
  * Трейт для управления формы редактирования модели
@@ -17,6 +18,26 @@ trait UpdateController
      * @var UpdateForm Экземпляр формы редактирования
      */
     protected $updateForm = null;
+
+    /**
+     * Возвращает название шаблона для страницы создания
+     * @return string
+     */
+    public function getUpdateView()
+    {
+        throw_if(!property_exists($this, 'updateView'), WidgetException::class, 'Свойство [updateView] с названием шаблона не найдено');
+        return $this->updateView;
+    }
+
+    /**
+     * Возвращает название шаблона для страницы создания
+     * @return string
+     */
+    public function getUpdateFormClass()
+    {
+        throw_if(!property_exists($this, 'updateFormClass'), WidgetException::class, 'Свойство [updateFormClass] с названием с классом виджета не найдено');
+        return $this->updateFormClass;
+    }
 
     /**
      * Возвращает ссылку для перенаправления после успешного сохранения
@@ -45,7 +66,7 @@ trait UpdateController
         /**
          * Создаем форму
          */
-        $formWidget = $this->makeWidget($this->updateFormClass, $formOptions)->setModelId($modelId);
+        $formWidget = $this->makeWidget($this->getUpdateFormClass(), $formOptions)->setModelId($modelId);
         $this->extendFormUpdateContext($formWidget);
 
         return $formWidget;
@@ -78,7 +99,7 @@ trait UpdateController
         /**
          * Вот тут и происходит рендер
          */
-        return view($this->updateView, [
+        return view($this->getUpdateView(), [
             'formWidget' => $this->updateForm,
             'formModel' => $this->updateForm->getModel()
         ]);

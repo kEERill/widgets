@@ -1,6 +1,7 @@
-<?php namespace Keerill\Widgets\Lists\Traits;
+<?php namespace Keerill\Widgets\Traits\Controllers;
 
 use Keerill\Widgets\Lists\ListWidget;
+use Keerill\Widgets\Exceptions\WidgetException;
 
 trait ListController
 {
@@ -8,6 +9,26 @@ trait ListController
      * @var ListWidget Виджет
      */
     protected $listWidget = null;
+
+    /**
+     * Возвращает название шаблона для страницы создания
+     * @return string
+     */
+    public function getListView()
+    {
+        throw_if(!property_exists($this, 'listView'), WidgetException::class, 'Свойство [listView] с названием шаблона не найдено');
+        return $this->listView;
+    }
+
+    /**
+     * Возвращает название шаблона для страницы создания
+     * @return string
+     */
+    public function getListClass()
+    {
+        throw_if(!property_exists($this, 'listClass'), WidgetException::class, 'Свойство [listClass] с названием с классом виджета не найдено');
+        return $this->listClass;
+    }
 
     /**
      * Возвращает параметры для виджета листа
@@ -41,7 +62,7 @@ trait ListController
         /**
          * Создаем таблицу
          */
-        $listWidget = $this->makeWidget($this->listClass, $listOptions);
+        $listWidget = $this->makeWidget($this->getListClass(), $listOptions);
         $this->extendListCreate($listWidget);
 
         /**
@@ -60,7 +81,7 @@ trait ListController
      */
     protected function listIndex()
     {
-        return view($this->listView)->with('listWidget', $this->listWidget = $this->makeListWidget());
+        return view($this->getListView())->with('listWidget', $this->listWidget = $this->makeListWidget());
     }
 
     /**

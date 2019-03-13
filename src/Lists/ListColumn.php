@@ -1,12 +1,12 @@
 <?php namespace Keerill\Widgets\Lists;
 
 use Keerill\Widgets\Traits\Events;
+use Keerill\Widgets\Traits\Options;
 use Illuminate\Database\Eloquent\Model;
-use Keerill\Widgets\Traits\UsableOptions;
 
 class ListColumn
 {
-    use UsableOptions, Events;
+    use Options, Events;
 
     /**
      * @var string Название столбца
@@ -88,7 +88,7 @@ class ListColumn
      */
     protected function initConfig() 
     {
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'title', 'default', 'cssClass', 'width'
         ]);
     }

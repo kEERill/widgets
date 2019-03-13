@@ -1,8 +1,8 @@
 <?php namespace Keerill\Widgets\Forms;
 
 use Illuminate\Support\Arr;
+use Keerill\Widgets\Traits\Theme;
 use Illuminate\Support\Collection;
-use Keerill\Widgets\Traits\ThemeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Widget as WidgetBase;
 use Illuminate\Contracts\Validation\Validator;
@@ -12,7 +12,7 @@ use Keerill\Widgets\Forms\Types\Interfaces\Validation as ValidationInterface;
 
 class FormWidget extends WidgetBase
 {
-    use ThemeTrait;
+    use Theme;
     
     /**
      * @var string Метод формы [POST, GET, PUT, DELETE]
@@ -595,7 +595,7 @@ class FormWidget extends WidgetBase
      */
     protected function initConfig()
     {
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'method', 'url', 'wrapperClass', 'modelId', 'routeName'
         ]);
     }

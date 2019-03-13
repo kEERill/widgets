@@ -17,7 +17,7 @@ class RelationType extends ListColumn
     {
         parent::initConfig();
         
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'select'
         ]);
     }

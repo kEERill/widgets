@@ -27,7 +27,7 @@ class InputType extends \Keerill\Widgets\Forms\FormField implements ValueInterfa
     {
         parent::initConfig();
         
-        $this->addConfigOptionsWithMethods([
+        $this->addConfigOptions([
             'label', 
             'labelClass', 
             'comment', 
