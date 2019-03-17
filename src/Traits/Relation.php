@@ -40,17 +40,17 @@ trait Relation
      */
     public function getRelationModel()
     {
-        return $this->parentModel;
+        return $this->relationModel;
     }
 
     /**
      * Подключает родительскую модель к форме используя родительскую модель
-     * @param Model $parentModel
+     * @param Model $relationModel
      * @return void
      */
-    public function setParentModel(Model $parentModel)
+    public function setRelationModel(Model $relationModel)
     {
-        $this->parentModel = $parentModel;
+        $this->relationModel = $relationModel;
         return $this;
     }
 
@@ -74,7 +74,7 @@ trait Relation
     protected function relationInitConfig()
     {
         $this->addConfigOptions([
-            'parentModel'
+            'relationModel'
         ]);
     }
 }
