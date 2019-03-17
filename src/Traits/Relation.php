@@ -1,7 +1,6 @@
 <?php namespace Keerill\Widgets\Traits\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
-use Keerill\Widgets\Exceptions\FormModelException;
 use Keerill\Widgets\Exceptions\WidgetException;
 
 /**
@@ -19,7 +18,7 @@ trait Relation
      * Возвращает название столбца, в кторое будет вставлен ID родительском модели
      * @return string
      */
-    protected function getRelationName()
+    public function getRelationName()
     {
         throw_if(!property_exists($this, 'relationName'), WidgetException::class, 'Свойство [relationName] с названием связи не найдено');
         return $this->relationName;
@@ -29,7 +28,7 @@ trait Relation
      * Возвращает класс родительской модели
      * @return string
      */
-    protected function getRelationModelClass()
+    public function getRelationModelClass()
     {
         throw_if(!property_exists($this, 'relationModelClass'), WidgetException::class, 'Свойство [relationModelClass] с классом родительской модели не найдено');
         return $this->relationModelClass;
@@ -49,7 +48,7 @@ trait Relation
      * @param Model $parentModel
      * @return void
      */
-    protected function setParentModel(Model $parentModel)
+    public function setParentModel(Model $parentModel)
     {
         $this->parentModel = $parentModel;
         return $this;
