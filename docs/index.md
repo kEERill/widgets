@@ -19,19 +19,19 @@ In Laravel 5.5 the service provider will automatically get registered. In older 
 ];
 ```
 
-After installing the package, you need to enter a command to create base classes of widgets (Without this, widgets will NOT work)
+After installing the package, you need to enter a command to create base classes of widgets (Without this, widgets will NOT work) [Version >= 1.2]
 
 ```bash
 php artisan vendor:publish --provider=Keerill\Widgets\Providers\ServiceProvider --tag=widgets-install
 ```
 
-Config
+Config [Version any]
 
 ```bash
 php artisan vendor:publish --provider=Keerill\Widgets\Providers\ServiceProvider --tag=widgets-config
 ```
 
-Views
+Views [Version any]
 
 ```bash
 php artisan vendor:publish --provider=Keerill\Widgets\Providers\ServiceProvider --tag=widgets-views
