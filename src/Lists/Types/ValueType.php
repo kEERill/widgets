@@ -1,6 +1,6 @@
 <?php namespace Keerill\Widgets\Lists\Types;
 
-use Keerill\Widgets\Lists\ListColumn;
+use App\Widgets\Lists\ListColumn;
 use Illuminate\Database\Eloquent\Model;
 
 class ValueType extends ListColumn

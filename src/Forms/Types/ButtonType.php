@@ -2,7 +2,7 @@
 
 use Keerill\Widgets\Forms\Types\Helpers\Disabled;
 
-class ButtonType extends \Keerill\Widgets\Forms\FormField
+class ButtonType extends \App\Widgets\Forms\FormField
 {
     use Disabled;
 

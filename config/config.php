@@ -88,7 +88,7 @@ return [
         /**
          * Стандартный столбец
          */
-        'default' => \Keerill\Widgets\Lists\ListColumn::class,
+        'default' => \App\Widgets\Lists\ListColumn::class,
 
         /**
          * Управление связями
