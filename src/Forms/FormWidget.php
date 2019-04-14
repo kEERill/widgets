@@ -3,8 +3,8 @@
 use Illuminate\Support\Arr;
 use Keerill\Widgets\Traits\Theme;
 use Illuminate\Support\Collection;
+use App\Widgets\Widget as WidgetBase;
 use Illuminate\Database\Eloquent\Model;
-use Keerill\Widgets\Widget as WidgetBase;
 use Illuminate\Contracts\Validation\Validator;
 use Keerill\Widgets\Exceptions\FormFieldException;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;

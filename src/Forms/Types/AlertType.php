@@ -1,6 +1,6 @@
 <?php namespace Keerill\Widgets\Forms\Types;
 
-class AlertType extends \Keerill\Widgets\Forms\FormField
+class AlertType extends \App\Widgets\Forms\FormField
 {
     /**
      * @var string Тип сообщения [danger, success, primary, warning]

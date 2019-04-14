@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Keerill\Widgets\Lists\ListWidget;
+use App\Widgets\Lists\ListWidget;
 
 class DummyClass extends ListWidget
 {

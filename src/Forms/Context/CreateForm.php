@@ -1,6 +1,6 @@
 <?php namespace Keerill\Widgets\Forms\Context;
 
-use Keerill\Widgets\Forms\FormWidget;
+use App\Widgets\Forms\FormWidget;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Forms\Traits\ModelSaver;
 

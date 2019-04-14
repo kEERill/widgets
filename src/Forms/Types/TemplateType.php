@@ -1,9 +1,8 @@
 <?php namespace Keerill\Widgets\Forms\Types;
 
-
 use Keerill\Widgets\Exceptions\FormFieldException;
 
-class TemplateType extends \Keerill\Widgets\Forms\FormField
+class TemplateType extends \App\Widgets\Forms\FormField
 {
     /**
      * @inheritdoc

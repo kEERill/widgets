@@ -4,7 +4,7 @@ use Keerill\Widgets\Forms\Types\Helpers\Value;
 use Keerill\Widgets\Forms\Types\Interfaces\Value as ValueInterface;
 
 
-class HiddenType extends \Keerill\Widgets\Forms\FormField implements ValueInterface
+class HiddenType extends \App\Widgets\Forms\FormField implements ValueInterface
 {
     use Value;
 

@@ -5,7 +5,7 @@ use Keerill\Widgets\Forms\Types\Interfaces\{
 use Keerill\Widgets\Forms\Types\Helpers\{
     Label, Value as ValueField, Comment, Placeholder, Validation };
 
-class InputType extends \Keerill\Widgets\Forms\FormField implements ValueInterface, ValidationInterface
+class InputType extends \App\Widgets\Forms\FormField implements ValueInterface, ValidationInterface
 {
     use Label, Comment, ValueField, Placeholder, Validation;
 

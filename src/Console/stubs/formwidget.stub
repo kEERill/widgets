@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Keerill\Widgets\Forms\FormWidget;
+use App\Widgets\Forms\FormWidget;
 
 class DummyClass extends FormWidget
 {

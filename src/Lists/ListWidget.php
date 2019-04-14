@@ -1,13 +1,13 @@
 <?php namespace Keerill\Widgets\Lists;
 
-use Keerill\Widgets\Widget;
 use Keerill\Widgets\Traits\Theme;
 use Illuminate\Support\Collection;
+use App\Widgets\Widget as WidgetBase;
 use Illuminate\Database\Eloquent\Model;
 use Keerill\Widgets\Exceptions\ListException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ListWidget extends Widget
+class ListWidget extends WidgetBase
 {
     use Theme;
 
