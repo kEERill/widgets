@@ -40,15 +40,6 @@ trait ListController
     }
 
     /**
-     * Страница с таблицей
-     * @return mixed
-     */
-    public function index()
-    {
-        return $this->listIndex();
-    }
-
-    /**
      * Создает ListWidget
      * @return mixed
      */

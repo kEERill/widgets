@@ -73,17 +73,6 @@ trait UpdateController
     }
 
     /**
-     * Выводит страницу редактирование модели
-     *
-     * @param int $modelId
-     * @return mixed
-     */
-    public function edit(int $modelId)
-    {
-        return $this->formEdit($modelId);
-    }
-
-    /**
      * Выполняет логику обновления, т.е. вывод формы
      *
      * @param integer $modelId ID редактируемой модели
@@ -103,19 +92,6 @@ trait UpdateController
             'formWidget' => $this->updateForm,
             'formModel' => $this->updateForm->getModel()
         ]);
-    }
-
-    /**
-     * Выполняет обновление
-     *
-     * @param int $modelId
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function update(int $modelId)
-    {
-        return $this->formUpdate($modelId);
     }
 
     /**

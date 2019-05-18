@@ -65,16 +65,6 @@ trait CreateController
     }
 
     /**
-     * Выводит страницу создания с формой
-     * @param WidgetBuilder
-     * @return mixed
-     */
-    public function create()
-    {
-        return $this->formCreate();
-    }
-
-    /**
      * Осуществляет создание формы и вывод её на экран
      * @param WidgetBuilder
      * @return mixed
@@ -89,19 +79,6 @@ trait CreateController
         return view($this->getCreateView(), [
             'formWidget' => $this->createForm
         ]);
-    }
-
-    /**
-     * Обработывает запрос на создание модели
-     *
-     * @param WidgetBuilder
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function store()
-    {
-        return $this->formStore();
     }
 
     /**
